@@ -21,9 +21,12 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in payloads:
             # Send a GET request with the SQL injection payload
-            response = requests.get(url + "?" + parameter + "=" + payload)
-            new_url = url + "?" + parameter + "=" + payload
-            print('trying.. '+ new_url)
+            if ['?','='] in url: #check if url have parameter
+                response = requests.get(url + payload)
+            else:
+                response = requests.get(url + "?" + parameter + "=" + payload)
+                new_url = url + "?" + parameter + "=" + payload
+                print('trying.. '+ new_url)
 
             # Check if the response contains any of the SQL error messages
             for error_message in errors_msgs:
@@ -35,9 +38,14 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in boolean_based_payloads:
             # Send a GET request with the SQL injection payload
-            start_time = time.time()
-            response = requests.get(url + "?" + parameter + "=" + payload)
-            execution_time = time.time() - start_time
+            if ['?','='] in url: #check if url have parameter
+                start_time = time.time()
+                response = requests.get(url + payload)
+                execution_time = time.time() - start_time
+            else:
+                start_time = time.time()
+                response = requests.get(url + "?" + parameter + "=" + payload)
+                execution_time = time.time() - start_time
 
             # Check if the response contains the specified payload
             if payload in response.text:
@@ -47,12 +55,17 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in time_based_payloads:
             # Send a GET request with the SQL injection payload
-            start_time = time.time()
-            response = requests.get(url + "?" + parameter + "=" + payload)
-            execution_time = time.time() - start_time
+            if ['?','='] in url: #check if url have parameter
+                start_time = time.time()
+                response = requests.get(url + payload)
+                execution_time = time.time() - start_time
+            else:
+                start_time = time.time()
+                response = requests.get(url + "?" + parameter + "=" + payload)
+                execution_time = time.time() - start_time
 
             # Check if the execution time is significantly different from the default execution time
-            if execution_time > 3:  # Adjust this threshold as needed
+            if execution_time > 5:  # Adjust this threshold as needed
                 vulnerable_parameters.append((parameter, payload, 'Vulnerable (Time-based)'))
 
     return vulnerable_parameters
