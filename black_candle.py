@@ -48,7 +48,7 @@ def main():
     if args.url and args.data:
         url = args.url
         data = args.data
-        sqli_scan(url,data)
+        sqli_scan(url,data,payloads)
     elif args.url and not args.data:
         url = args.url
         sqli_scan(url,params,payloads)
@@ -56,7 +56,15 @@ def main():
         url = args.url
         payload = args.payload
         sqli_scan(url,params,payload)
-
+    elif args.url and args.data and args.payload:
+        url = args.url
+        payload = args.payload
+        data = args.Data
+        sqli_scan(url,data,payload)
+    else:
+        slowprint("please try again with true usage")
+        parser.print_help()
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()

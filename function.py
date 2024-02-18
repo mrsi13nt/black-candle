@@ -1,7 +1,7 @@
 import time
 import requests
-from config import errors_msgs,boolean_based_payloads,time_based_payloads
-from config import payloads as pyl
+from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads
+from config import error_based_payloads as ebp
 
 
 def slowprint(s):
@@ -13,7 +13,7 @@ def slowprint(s):
 
 def sqli_scan(url, parameters, payloads):
 
-    payloads = pyl
+    payloads = ebp
     # Initialize empty list to store results
     vulnerable_parameters = []
 
@@ -67,6 +67,20 @@ def sqli_scan(url, parameters, payloads):
             # Check if the execution time is significantly different from the default execution time
             if execution_time > 5:  # Adjust this threshold as needed
                 vulnerable_parameters.append((parameter, payload, 'Vulnerable (Time-based)'))
+
+    # Check for UNION SELECT-based SQL injection
+    for parameter in parameters:
+        for payload in union_select_payloads:
+            # Send a GET request with the SQL injection payload
+            if ['?','='] in url: #check if url have parameter
+                response = requests.get(url + payload)
+            else:
+                response = requests.get(url + "?" + parameter + "=" + payload)
+
+            # Check if the response contains the specified payload
+            if payload in response.text:
+                vulnerable_parameters.append((parameter, payload, 'Vulnerable (UNION SELECT-based)'))
+
 
     return vulnerable_parameters
 
