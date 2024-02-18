@@ -22,11 +22,14 @@ def sqli_scan(url, parameters, payloads):
         for payload in payloads:
             # Send a GET request with the SQL injection payload
             response = requests.get(url + "?" + parameter + "=" + payload)
+            new_url = url + "?" + parameter + "=" + payload
+            print('trying.. '+ new_url)
 
             # Check if the response contains any of the SQL error messages
             for error_message in errors_msgs:
                 if error_message in response.text:
                     vulnerable_parameters.append((parameter, payload, 'Vulnerable (Error-based)'))
+                    print("sql injection in " + new_url)
 
     # Check for boolean-based SQL injection
     for parameter in parameters:
