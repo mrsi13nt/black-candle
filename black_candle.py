@@ -36,15 +36,48 @@ def main():
         print("Error: Either -u/--url or -l/--list option is required.")
         parser.print_help()
         sys.exit(1)
-
+# ======== list of urls ===========
     if args.urlist:
-        file = args.urlist
+        file_p = args.urlist
         #check if the file exist
         if check_file_existence(file):
-            pass
-            # write code here that can read the file and scan it
+            # Read lines from the file
+            with open(file_p, 'r') as file:
+                lines = [line.strip() for line in file]
+                for line in lines:
+                    sqli_scan(line,params,payloads)
         else:
             slowprint(f"the file {file} not exist\n please try again with full path")
+    elif args.urlist and args.payload:
+        file_p = args.urlist
+        payload = args.payload
+        #check if the file exist
+        if check_file_existence(file):
+            # Read lines from the file
+            with open(file_p, 'r') as file:
+                lines = [line.strip() for line in file]
+                for line in lines:
+                    sqli_scan(line,params,payload)
+        else:
+            slowprint(f"the file {file} not exist\n please try again with full path")
+
+    elif args.urlist and args.payload and args.data:
+        file_p = args.urlist
+        payload = args.payload
+        data = args.data
+        #check if the file exist
+        if check_file_existence(file):
+            # Read lines from the file
+            with open(file_p, 'r') as file:
+                lines = [line.strip() for line in file]
+                for line in lines:
+                    sqli_scan(line,data,payload)
+        else:
+            slowprint(f"the file {file} not exist\n please try again with full path")
+    else:
+        slowprint
+
+# ======== single url =========        
     if args.url and args.data:
         url = args.url
         data = args.data
