@@ -1,8 +1,12 @@
 import time
 import requests
-from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers
 from config import error_based_payloads as ebp
 
+
+# Suppress only the InsecureRequestWarning caused by skipping certificate verification
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def slowprint(s):
     for c in s + '\n':
@@ -83,6 +87,40 @@ def sqli_scan(url, parameters, payloads):
 
 
     return vulnerable_parameters
+
+
+def hhi(url, head=None): # host header injection scanner singel url
+    try:
+        if head:
+            r = requests.get(url, headers={'Host': head}, verify=False)
+        else:
+            r = requests.get(url, headers=headers, verify=False)
+
+        if r.status_code == 200:
+            print(f'url has host header injection\n {url}')
+        else:
+            print(f'url does not have host header injection\n {url}')
+
+    except requests.exceptions.SSLError as e:
+        print(f"SSL Certificate Verification Error: {e}")
+        # Handle SSL certificate verification error as needed
+
+def hhi_list(urls, head=None): # host header injection scanner list of urls
+    for url in urls:
+        try:
+            if head:
+                r = requests.get(url, headers={'Host': head}, verify=False)
+            else:
+                r = requests.get(url, headers=headers, verify=False)
+
+            if r.status_code == 200:
+                print(f'url has host header injection\n {url}')
+            else:
+                print(f'url does not have host header injection\n {url}')
+
+        except requests.exceptions.SSLError as e:
+            print(f"SSL Certificate Verification Error for {url}: {e}")
+            # Handle SSL certificate verification error as needed
 
 def check_file_existence(file_path):
     return os.path.exists(file_path)
