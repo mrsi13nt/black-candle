@@ -38,5 +38,5 @@ def check_wordlist(wordlist_file):
             check_webpage(url)
 
 if __name__ == "__main__":
-    wordlist_file = "javascript_urls.txt"  # Update with your wordlist file
+    wordlist_file = "js_files.txt"  # Update with your wordlist file
     check_wordlist(wordlist_file)

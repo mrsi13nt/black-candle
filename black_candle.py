@@ -26,6 +26,8 @@ def main():
     hhi_group = parser.add_argument_group('Host Header Injection')
     hhi_group.add_argument('-hh', dest='hhi', help='run host header injection scanner')
     hhi_group.add_argument('--host', dest='host', metavar='Host', help='add custom host header (e.g. --host "www.ping.com")')
+    js_group = parser.add_argument_group('JS scan')
+    js_group.add_argument('-js', dest='js', help='scan all java script files of full website from api keys and more..')
     detection_group = parser.add_argument_group('Detection')
     detection_group.add_argument('--level',dest='level', metavar='int', action='store', type=int, help='the level of scan from 1 to 3 (default 1)') # x
     output_group = parser.add_argument_group('Output')
@@ -106,6 +108,8 @@ def main():
         hhi_list(args.list,None)
     elif args.hhi and args.host and args.list:
         hhi_list(args.list, args.host)
+    elif args.url and args.js:
+        js_scanner(args.url)
     else:
         slowprint("please try again with true usage")
         parser.print_help()
