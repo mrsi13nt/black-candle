@@ -4,7 +4,7 @@ import re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers
+from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
 from config import error_based_payloads as ebp
 
 
@@ -106,7 +106,7 @@ def hhi(url, head=None): # host header injection scanner singel url
 
     except requests.exceptions.SSLError as e:
         print(f"SSL Certificate Verification Error: {e}")
-        # Handle SSL certificate verification error as needed
+        # Handle SSL certificate verification error
 
 def hhi_list(urls, head=None): # host header injection scanner list of urls
     for url in urls:
@@ -123,9 +123,9 @@ def hhi_list(urls, head=None): # host header injection scanner list of urls
 
         except requests.exceptions.SSLError as e:
             print(f"SSL Certificate Verification Error for {url}: {e}")
-            # Handle SSL certificate verification error as needed
+            # Handle SSL certificate verification error
 
-def js_scanner(url):
+def js_scanner(url): # scan for api key or any secrets in java script files
 
     def extract_js_files(url):
         try:
@@ -208,15 +208,58 @@ def js_scanner(url):
     check_wordlist(wordlist_file)
 
 
+def send_request(url, payload):
+    try:
+        response = requests.get(url + payload)
+
+
+        # Check if the response contains the payload
+        if response.status_code == 200 and payload in response.text:
+            return True
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+
+    return False
+
+
+# xss reflected scanner
+def xss_re(url):
+    def check_reflected_xss(url):
+        print("Checking for reflected XSS...")
+        if "?" not in url or "=" not in url:
+            for payload in reflected_xss_payloads:
+                if send_request(url, "?q=" + payload):
+                    print(f"Reflected XSS found with payload: {payload}")
+                    return True
+            return False
+        else:
+            for payload in reflected_xss_payloads:
+                if send_request(url + payload):
+                    print(f"Reflected XSS found with payload: {payload}")
+                    return True
+            return False
+    if not check_reflected_xss(url):
+        print("No reflected XSS found.")
+
+# xss dom scanner
+def xss_dom(url):
+    def check_dom_based_xss(url):
+        print("Checking for DOM-based XSS...")
+        if "?" not in url or "=" not in url:
+            for payload in dom_based_xss_payloads:
+                if send_request(url, "#" + payload):
+                    print(f"DOM-based XSS found with payload: {payload}")
+                    return True
+            return False
+        else:
+            for payload in dom_based_xss_payloads:
+                if send_request(url + payload):
+                    print(f"DOM-based XSS found with payload: {payload}")
+                    return True
+            return False
+    if not check_dom_based_xss(url):
+        print("No DOM-based XSS found.")
+
 
 def check_file_existence(file_path):
     return os.path.exists(file_path)
-
-def level_one():
-    print("level 1")
-
-def level_two():
-    print("level 1")
-
-def level_three():
-    print("level 3")

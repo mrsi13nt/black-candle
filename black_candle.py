@@ -28,6 +28,9 @@ def main():
     hhi_group.add_argument('--host', dest='host', metavar='Host', help='add custom host header (e.g. --host "www.ping.com")')
     js_group = parser.add_argument_group('JS scan')
     js_group.add_argument('-js', dest='js', action='store_true' ,help='scan all java script files of full website from api keys and more..')
+    xss_group = parser.add_argument_group('XSS')
+    xss_group.add_argument('-rf', dest='reflected', action='store_true', help='scan for reflected XSS')
+    xss_group.add_argument('-d', dest='dom', action='store_true', help='scan for DOM XSS')
     detection_group = parser.add_argument_group('Detection')
     detection_group.add_argument('--level',dest='level', metavar='int', action='store', type=int, help='the level of scan from 1 to 3 (default 1)') # x
     output_group = parser.add_argument_group('Output')
@@ -105,8 +108,14 @@ def main():
         hhi_list(args.list,None)
     elif args.hhi and args.host and args.list:
         hhi_list(args.list, args.host)
-    elif args.url and args.js:
+# ======== Scan Java Script Files =========
+    elif args.js:
         js_scanner(args.url)
+# ======== Scan XSS =========
+    elif args.reflected:
+        xss_re(args.url)
+    elif args.dom:
+        xss_dom(args.url)
     else:
         slowprint("please try again with true usage")
         parser.print_help()

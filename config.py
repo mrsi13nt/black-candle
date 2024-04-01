@@ -534,6 +534,17 @@ union_select_payloads = [
 
 
 
+reflected_xss_payloads = [
+    "<script>alert('Reflected XSS 1');</script>",
+    "<script>alert('Reflected XSS 2');</script>",
+]
+
+dom_based_xss_payloads = [
+    "';alert('DOM-based XSS 1');//",
+    "';alert('DOM-based XSS 2');//",
+]
+
+
 headers = { #header to scan host header injection
     'X-Forwarded-Host': 'www.ping.com',
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0'
