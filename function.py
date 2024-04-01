@@ -28,7 +28,7 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in payloads:
             # Send a GET request with the SQL injection payload
-            if ['?','='] in url: #check if url have parameter
+            if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)
@@ -45,7 +45,7 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in boolean_based_payloads:
             # Send a GET request with the SQL injection payload
-            if ['?','='] in url: #check if url have parameter
+            if '?' in url and '=' in url: #check if url have parameter
                 start_time = time.time()
                 response = requests.get(url + payload)
                 execution_time = time.time() - start_time
@@ -62,7 +62,7 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in time_based_payloads:
             # Send a GET request with the SQL injection payload
-            if ['?','='] in url: #check if url have parameter
+            if '?' in url and '=' in url: #check if url have parameter
                 start_time = time.time()
                 response = requests.get(url + payload)
                 execution_time = time.time() - start_time
@@ -79,7 +79,7 @@ def sqli_scan(url, parameters, payloads):
     for parameter in parameters:
         for payload in union_select_payloads:
             # Send a GET request with the SQL injection payload
-            if ['?','='] in url: #check if url have parameter
+            if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)

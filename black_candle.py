@@ -87,9 +87,6 @@ def main():
         url = args.url
         data = args.data
         sqli_scan(url,data,payloads)
-    elif args.url and not args.data:
-        url = args.url
-        sqli_scan(url,params,payloads)
     elif args.url and args.payload:
         url = args.url
         payload = args.payload
