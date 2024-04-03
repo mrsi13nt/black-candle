@@ -223,7 +223,7 @@ def send_request(url, payload):
 
 
 # xss reflected scanner
-def xss_re(url):
+def xss_re(url, parameter=None):
     def check_reflected_xss(url):
         print("Checking for reflected XSS...")
         if "?" not in url or "=" not in url:
@@ -234,12 +234,16 @@ def xss_re(url):
             return False
         else:
             for payload in reflected_xss_payloads:
-                if send_request(url + payload):
-                    print(f"Reflected XSS found with payload: {payload}")
+                if send_request(url + "&" + parameter + "=" + payload):
+                    print(f"Reflected XSS found in parameter '{parameter}' with payload: {payload}")
                     return True
             return False
-    if not check_reflected_xss(url):
+
+    if parameter and not check_reflected_xss(url):
+        print(f"No reflected XSS found in parameter '{parameter}'.")
+    elif not parameter and not check_reflected_xss(url):
         print("No reflected XSS found.")
+
 
 # xss dom scanner
 def xss_dom(url):

@@ -31,8 +31,7 @@ def main():
     xss_group = parser.add_argument_group('XSS')
     xss_group.add_argument('-rf', dest='reflected', action='store_true', help='scan for reflected XSS')
     xss_group.add_argument('-d', dest='dom', action='store_true', help='scan for DOM XSS')
-    detection_group = parser.add_argument_group('Detection')
-    detection_group.add_argument('--level',dest='level', metavar='int', action='store', type=int, help='the level of scan from 1 to 3 (default 1)') # x
+    xss_group.add_argument('-param', dest='param', help='add a parameter to scan')
     output_group = parser.add_argument_group('Output')
     output_group.add_argument('-o', dest='output', metavar='string', type=argparse.FileType('w', encoding='latin-1'), help='file to write output to') # x
     parser.add_argument('-u', '--url', dest='url', action='store', metavar='URL', help='Target URL (e.g. "http://www.site.com/vuln.php?id=1")')
@@ -113,7 +112,9 @@ def main():
         js_scanner(args.url)
 # ======== Scan XSS =========
     elif args.reflected:
-        xss_re(args.url)
+        xss_re(args.url,None)
+    elif args.reflected and args.param:
+        xss_re(args.url,args.param)
     elif args.dom:
         xss_dom(args.url)
     else:
