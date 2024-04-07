@@ -1,2 +1,2 @@
 # black-candle
-a basic SQL scanner
+a basic web scanner for developers

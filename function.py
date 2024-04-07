@@ -2,7 +2,7 @@ import time
 import requests
 import re
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
 from config import error_based_payloads as ebp
@@ -223,46 +223,168 @@ def send_request(url, payload):
 
 
 # xss reflected scanner
-def xss_re(url, parameter=None):
-    def check_reflected_xss(url):
-        print("Checking for reflected XSS...")
-        if "?" not in url or "=" not in url:
-            for payload in reflected_xss_payloads:
-                if send_request(url, "?q=" + payload):
-                    print(f"Reflected XSS found with payload: {payload}")
-                    return True
-            return False
-        else:
-            for payload in reflected_xss_payloads:
-                if send_request(url + "&" + parameter + "=" + payload):
-                    print(f"Reflected XSS found in parameter '{parameter}' with payload: {payload}")
-                    return True
-            return False
+class ReflectedXSSScanner:
+    def __init__(self, base_url, payloads):
+        self.base_url = base_url
+        self.payloads = payloads
+        self.visited_urls = set()
+        self.vulnerable_urls = set()
 
-    if parameter and not check_reflected_xss(url):
-        print(f"No reflected XSS found in parameter '{parameter}'.")
-    elif not parameter and not check_reflected_xss(url):
-        print("No reflected XSS found.")
+    def _get_all_urls(self, url):
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            links = soup.find_all('a', href=True)
+            urls = [urljoin(url, link['href']) for link in links]
+            return urls
+        except Exception as e:
+            print(f"Error fetching URLs from {url}: {e}")
+            return []
+
+    def _check_reflected_xss(self, url):
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            forms = soup.find_all('form')
+            for form in forms:
+                form_action = form.get('action')
+                if form_action:
+                    form_url = urljoin(url, form_action)
+                    form_inputs = form.find_all('input', {'type': 'text'})
+                    for input_field in form_inputs:
+                        input_name = input_field.get('name')
+                        for payload in self.payloads:
+                            modified_params = {input_name: payload}
+                            modified_url = form_url + '?' + urlencode(modified_params)
+                            response = requests.get(modified_url)
+                            if payload in response.text:
+                                self.vulnerable_urls.add(form_url)
+                                print(f"Reflected XSS found in {form_url} with payload: {payload}")
+        except Exception as e:
+            print(f"Error checking reflected XSS in {url}: {e}")
+
+    def crawl_and_scan(self):
+        urls_to_scan = [self.base_url]
+        while urls_to_scan:
+            current_url = urls_to_scan.pop(0)
+            if current_url in self.visited_urls:
+                continue
+            self.visited_urls.add(current_url)
+            print(f"Scanning {current_url} for reflected XSS...")
+            self._check_reflected_xss(current_url)
+            urls_to_scan.extend(self._get_all_urls(current_url))
 
 
 # xss dom scanner
-def xss_dom(url):
-    def check_dom_based_xss(url):
-        print("Checking for DOM-based XSS...")
-        if "?" not in url or "=" not in url:
-            for payload in dom_based_xss_payloads:
-                if send_request(url, "#" + payload):
-                    print(f"DOM-based XSS found with payload: {payload}")
-                    return True
+class DOMXSSScanner:
+    def __init__(self, base_url, payloads):
+        self.base_url = base_url
+        self.payloads = payloads
+        self.visited_urls = set()
+        self.vulnerable_urls = set()
+
+    def _get_all_urls(self, url):
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            links = soup.find_all('a', href=True)
+            urls = [urljoin(url, link['href']) for link in links]
+            return urls
+        except Exception as e:
+            print(f"Error fetching URLs from {url}: {e}")
+            return []
+
+    def _check_dom_xss(self, url):
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            script_tags = soup.find_all('script')
+            for script_tag in script_tags:
+                for payload in self.payloads:
+                    if payload in script_tag.get_text():
+                        self.vulnerable_urls.add(url)
+                        print(f"DOM-based XSS found in {url} with payload: {payload}")
+                        break
+        except Exception as e:
+            print(f"Error checking DOM XSS in {url}: {e}")
+
+    def crawl_and_scan(self):
+        urls_to_scan = [self.base_url]
+        while urls_to_scan:
+            current_url = urls_to_scan.pop(0)
+            if current_url in self.visited_urls:
+                continue
+            self.visited_urls.add(current_url)
+            print(f"Scanning {current_url} for DOM-based XSS...")
+            self._check_dom_xss(current_url)
+            urls_to_scan.extend(self._get_all_urls(current_url))
+
+# xss blind scanner
+class BlindXSSScanner:
+    def __init__(self, base_url, payloads):
+        self.base_url = base_url
+        self.payloads = payloads
+        self.visited_urls = set()
+        self.vulnerable_urls = set()
+
+    def _get_all_urls(self, url):
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            links = soup.find_all('a', href=True)
+            urls = [urljoin(url, link['href']) for link in links]
+            return urls
+        except Exception as e:
+            print(f"Error fetching URLs from {url}: {e}")
+            return []
+
+    def _check_blind_xss(self, url):
+        try:
+            for payload in self.payloads:
+                response = requests.post(url, data={"input": payload})
+                if payload in response.text:
+                    self.vulnerable_urls.add(url)
+                    print(f"Blind XSS found in {url} with payload: {payload}")
+        except Exception as e:
+            print(f"Error checking Blind XSS in {url}: {e}")
+
+    def crawl_and_scan(self):
+        urls_to_scan = [self.base_url]
+        while urls_to_scan:
+            current_url = urls_to_scan.pop(0)
+            if current_url in self.visited_urls:
+                continue
+            self.visited_urls.add(current_url)
+            print(f"Scanning {current_url} for Blind XSS...")
+            self._check_blind_xss(current_url)
+            urls_to_scan.extend(self._get_all_urls(current_url))
+
+# WAF bypass
+class WAFBypass:
+    def __init__(self, enable_bypass=False):
+        self.enable_bypass = enable_bypass
+
+    def _detect_waf(self, url):
+        try:
+            response = requests.get(url)
+            if 'Web Application Firewall' in response.headers.get('Server', ''):
+                print(f"WAF detected on {url}")
+                return True
+            else:
+                print(f"No WAF detected on {url}")
+                return False
+        except Exception as e:
+            print(f"Error checking WAF in {url}: {e}")
             return False
-        else:
-            for payload in dom_based_xss_payloads:
-                if send_request(url + payload):
-                    print(f"DOM-based XSS found with payload: {payload}")
-                    return True
-            return False
-    if not check_dom_based_xss(url):
-        print("No DOM-based XSS found.")
+
+    def _bypass_waf(self, url):
+        # Add your WAF bypass techniques here
+        print(f"Bypassing WAF on {url}...")
+
+    def bypass(self, url):
+        if self.enable_bypass:
+            if self._detect_waf(url):
+                self._bypass_waf(url)
 
 
 def check_file_existence(file_path):
