@@ -1,6 +1,43 @@
-* {
-    margin: 0;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
 }
-.header{
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+tr:nth-child(odd) {
+    background-color: #ddd
+}
+hr {
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.main-text {
     text-align: center;
+    justify-content: center;
+}
+
+.head {
+    text-decoration: underline;
+    text-decoration-color: green;
 }
