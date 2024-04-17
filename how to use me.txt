@@ -1,5 +1,5 @@
 1- you need to open your terminal whatever your OS
-2- then make sure you installed python3 if you didn't you can check this link to download ()
+2- then make sure you installed python3 if you didn't you can check this link to download ("linkre")
 3- write this command (pip3 install -r requirements.txt) to install the python packages (it's important)
 4- you can use the tool now if we finished, so i am gonna explain every single command in this tool :)
 
@@ -12,7 +12,7 @@ now we finished the first steps and i am gonna explain that other switches
 
 first SQLi (SQL injection)
 this vulnerability attacks the weakness parmeters in the SQL database and it's high severity or medium
-for more info check this link ()
+for more info check this link ("linkre")
 
 
 
@@ -24,7 +24,7 @@ now how we can use data or payload and what they do!
 = by the way you can use both of switches at the same command line :)
 
 * Host header injection scanner 
-you can read more about Host header injections here ()
+you can read more about Host header injections here ("linkre")
 
 to use it you need to write -hh it's only run the scanner on the url that you input and it will runs with default options
 but if you choose to add custom host website you can do like that (e.g. --host "www.ping.com") with --host switch
@@ -45,7 +45,7 @@ DOM => -d
 Blind => -b
 for enable WAF bypass write -w with them
 
-== but one more important thing you should do before run blind XSS scan go to this link () and register on it and take a link to scan for blind xss and after scanner finish that web site gonna tell you what is payload runs in the target website
+== but one more important thing you should do before run blind XSS scan go to this link ("linkre") and register on it and take a link to scan for blind xss and after scanner finish that web site gonna tell you what is payload runs in the target website
 
 and after you get the link go to config.py file and search for <custom.subdomain> and replace it with that domain you got from the website
 

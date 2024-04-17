@@ -36,7 +36,7 @@ def main():
 
     # check the target url or list
     if not args.url:
-        print("Error: Either -u/--url or -l/--list option is required.")
+        print("Error: ""Either -u/--url or -l/--list option is required.")
         parser.print_help()
         sys.exit(1)
 
