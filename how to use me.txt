@@ -37,13 +37,11 @@ have fun in using it :)
 
 * XSS scanner 
 it's most popular vulnerabilityin web but we are in this tool only scan for Reflected and DOM and Blind XSS 
-= but we added new options will make your scanner touching reality it's WAF bypass (we added some techniques to bypass the WAF for XSS scanning)
 
 i am gonna explain this shortliy, if you wanted to scan Reflected or DOM or Blind XSS you just need to input the URL and then the type of scanner.
 Reflected => -rf
 DOM => -d
 Blind => -b
-for enable WAF bypass write -w with them
 
 == but one more important thing you should do before run blind XSS scan go to this link ("linkre") and register on it and take a link to scan for blind xss and after scanner finish that web site gonna tell you what is payload runs in the target website
 

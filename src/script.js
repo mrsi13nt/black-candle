@@ -10,7 +10,6 @@ const options = [
     {name: 'Javascript scanner'},
     { name: '-js', description: 'scan all java script files of full website from api keys and more..' },
     {name: 'XSS'},
-    { name: '-w', description: 'using simple WAF detector and trying to bypass it' },
     { name: '-rf', description: 'scan for reflected XSS' },
     { name: '-d', description: 'scan for DOM XSS' },
     { name: '-b', description: 'scan for blind xss' },

@@ -1,6 +1,7 @@
 import time
 import requests
 import re
+import sys
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -242,10 +243,15 @@ class ReflectedXSSScanner:
         self.payloads = payloads
         self.visited_urls = set()
         self.vulnerable_urls = set()
+        self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 
     def _get_all_urls(self, url):
+        headers = {'User-Agent': self.user_agent}
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers, timeout=5)
+            if response.status_code != 200:
+                print(f"Error fetching URLs from {url}: {response.status_code}")
+                return []
             soup = BeautifulSoup(response.text, 'html.parser')
             links = soup.find_all('a', href=True)
             urls = [urljoin(url, link['href']) for link in links]
@@ -255,8 +261,12 @@ class ReflectedXSSScanner:
             return []
 
     def _check_reflected_xss(self, url):
+        headers = {'User-Agent': self.user_agent}
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=headers, timeout=5)
+            if response.status_code != 200:
+                print(f"Error checking reflected XSS in {url}: {response.status_code}")
+                return
             soup = BeautifulSoup(response.text, 'html.parser')
             forms = soup.find_all('form')
             for form in forms:
@@ -269,12 +279,12 @@ class ReflectedXSSScanner:
                         for payload in self.payloads:
                             modified_params = {input_name: payload}
                             modified_url = form_url + '?' + urlencode(modified_params)
-                            response = requests.get(modified_url)
+                            response = requests.get(modified_url, headers=headers, timeout=5)
                             if payload in response.text:
                                 self.vulnerable_urls.add(form_url)
                                 print(f"Reflected XSS found in {form_url} with payload: {payload}")
-                                slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
-                                print("linkre")
+                                slowprint("You can read this article to learn more about this vulnerability and how to fix it:")
+                                print("https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)")
         except Exception as e:
             print(f"Error checking reflected XSS in {url}: {e}")
 
@@ -288,6 +298,9 @@ class ReflectedXSSScanner:
             print(f"Scanning {current_url} for reflected XSS...")
             self._check_reflected_xss(current_url)
             urls_to_scan.extend(self._get_all_urls(current_url))
+            time.sleep(1)
+
+
 
 
 # xss dom scanner
@@ -397,7 +410,27 @@ class WAFBypass:
             return False
 
     def _bypass_waf(self, url):
-        # Add your WAF bypass techniques here
+        def xss_scan_with_waf_bypass(url, payload):
+            payloads = payload
+            # Try each payload with different techniques to bypass WAF
+            for payload in payloads:
+                try:
+                    # Encode the payload for URL parameters
+                    encoded_payload = urllib.parse.quote(payload)
+
+                    # Send the GET request with the encoded payload
+                    response = requests.get(url + "?q=" + encoded_payload)
+
+                    # Check if the payload was successfully injected
+                    if payload in response.text:
+                        print(f"XSS vulnerability detected with payload: {payload}")
+                        return True
+                except requests.RequestException as e:
+                    print(f"An error occurred: {e}")
+
+            print("No XSS vulnerability detected.")
+            return False
+        xss_scan_with_waf_bypass(url, xss_waf_payloads)
         print(f"Bypassing WAF on {url}...")
 
     def bypass(self, url):

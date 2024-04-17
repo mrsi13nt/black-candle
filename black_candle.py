@@ -36,7 +36,7 @@ def main():
 
     # check the target url or list
     if not args.url:
-        print("Error: ""Either -u/--url or -l/--list option is required.")
+        print("\033[31mError: \033[0mEither -u/--url or -l/--list option is required.")
         parser.print_help()
         sys.exit(1)
 
@@ -64,26 +64,26 @@ def main():
         js_scanner(args.url)
 # ======== Scan XSS =========
     elif args.reflected:
-        ReflectedXSSScanner(args.url,reflected_xss_payloads)
-        reflected_xss_scanner.crawl_and_scan()
+        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
+        scanner.crawl_and_scan()
     elif args.dom:
         DOMXSSScanner(args.url,dom_based_xss_payloads)
-        dom_xss_scanner.crawl_and_scan()
+        DOMXSSScanner.crawl_and_scan()
     elif args.blind:
         BlindXSSScanner(args.url,blind_xss_payloads)
-        blind_xss_scanner.crawl_and_scan()
+        BlindXSSScanner.crawl_and_scan()
     elif args.reflected and args.waf:
-        ReflectedXSSScanner(args.url,reflected_xss_payloads)
+        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
-        reflected_xss_scanner.crawl_and_scan(waf_bypass)
+        scanner.crawl_and_scan(waf_bypass)
     elif args.dom and args.waf:
         DOMXSSScanner(args.url,dom_based_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
-        dom_xss_scanner.crawl_and_scan(waf_bypass)
+        DOMXSSScanner.crawl_and_scan(waf_bypass)
     elif args.blind and args.waf:
         BlindXSSScanner(args.url,blind_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
-        blind_xss_scanner.crawl_and_scan(waf_bypass)
+        BlindXSSScanner.crawl_and_scan(waf_bypass)
     else:
         slowprint("please try again with true usage")
         parser.print_help()

