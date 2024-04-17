@@ -30,6 +30,8 @@ def sqli_scan(url, parameters, payloads):
             # Send a GET request with the SQL injection payload
             if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
+                new_url = url + payload
+                print('trying.. '+ new_url)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)
                 new_url = url + "?" + parameter + "=" + payload
@@ -40,6 +42,8 @@ def sqli_scan(url, parameters, payloads):
                 if error_message in response.text:
                     vulnerable_parameters.append((parameter, payload, 'Vulnerable (Error-based)'))
                     print("sql injection in " + new_url)
+                    slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                    print("linkre")
 
     # Check for boolean-based SQL injection
     for parameter in parameters:
@@ -48,15 +52,23 @@ def sqli_scan(url, parameters, payloads):
             if '?' in url and '=' in url: #check if url have parameter
                 start_time = time.time()
                 response = requests.get(url + payload)
+                new_url = url + payload
+                print('trying.. '+ new_url)
                 execution_time = time.time() - start_time
             else:
                 start_time = time.time()
                 response = requests.get(url + "?" + parameter + "=" + payload)
+                new_url = url + "?" + parameter + "=" + payload
+                print('trying.. '+ new_url)
                 execution_time = time.time() - start_time
 
             # Check if the response contains the specified payload
             if payload in response.text:
                 vulnerable_parameters.append((parameter, payload, 'Vulnerable (Boolean-based)'))
+                print("sql injection in " + new_url)
+                slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                print("linkre")
+                
 
     # Check for time-based SQL injection
     for parameter in parameters:
@@ -65,15 +77,22 @@ def sqli_scan(url, parameters, payloads):
             if '?' in url and '=' in url: #check if url have parameter
                 start_time = time.time()
                 response = requests.get(url + payload)
+                new_url = url + payload
+                print('trying.. '+ new_url)
                 execution_time = time.time() - start_time
             else:
                 start_time = time.time()
                 response = requests.get(url + "?" + parameter + "=" + payload)
+                new_url = url + "?" + parameter + "=" + payload
+                print('trying.. '+ new_url)
                 execution_time = time.time() - start_time
 
             # Check if the execution time is significantly different from the default execution time
             if execution_time > 5:  # Adjust this threshold as needed
                 vulnerable_parameters.append((parameter, payload, 'Vulnerable (Time-based)'))
+                print("sql injection in " + new_url)
+                slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                print("linkre")
 
     # Check for UNION SELECT-based SQL injection
     for parameter in parameters:
@@ -81,12 +100,19 @@ def sqli_scan(url, parameters, payloads):
             # Send a GET request with the SQL injection payload
             if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
+                new_url = url + payload
+                print('trying.. '+ new_url)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)
+                new_url = url + "?" + parameter + "=" + payload
+                print('trying.. '+ new_url)
 
             # Check if the response contains the specified payload
             if payload in response.text:
                 vulnerable_parameters.append((parameter, payload, 'Vulnerable (UNION SELECT-based)'))
+                print("sql injection in " + new_url)
+                slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                print("linkre")
 
 
     return vulnerable_parameters
@@ -101,29 +127,14 @@ def hhi(url, head=None): # host header injection scanner singel url
 
         if r.status_code == 200:
             print(f'url has host header injection\n {url}')
+            slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+            print("linkre")
         else:
             print(f'url does not have host header injection\n {url}')
 
     except requests.exceptions.SSLError as e:
         print(f"SSL Certificate Verification Error: {e}")
         # Handle SSL certificate verification error
-
-def hhi_list(urls, head=None): # host header injection scanner list of urls
-    for url in urls:
-        try:
-            if head:
-                r = requests.get(url, headers={'Host': head}, verify=False)
-            else:
-                r = requests.get(url, headers=headers, verify=False)
-
-            if r.status_code == 200:
-                print(f'url has host header injection\n {url}')
-            else:
-                print(f'url does not have host header injection\n {url}')
-
-        except requests.exceptions.SSLError as e:
-            print(f"SSL Certificate Verification Error for {url}: {e}")
-            # Handle SSL certificate verification error
 
 def js_scanner(url): # scan for api key or any secrets in java script files
 
@@ -192,6 +203,8 @@ def js_scanner(url): # scan for api key or any secrets in java script files
 
                 if api_keys:
                     print(f"API keys found in {url}: {api_keys}")
+                    slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                    print("linkre")
                 else:
                     print(f"No API keys found in {url}")
             else:
@@ -260,6 +273,8 @@ class ReflectedXSSScanner:
                             if payload in response.text:
                                 self.vulnerable_urls.add(form_url)
                                 print(f"Reflected XSS found in {form_url} with payload: {payload}")
+                                slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                                print("linkre")
         except Exception as e:
             print(f"Error checking reflected XSS in {url}: {e}")
 
@@ -304,6 +319,8 @@ class DOMXSSScanner:
                     if payload in script_tag.get_text():
                         self.vulnerable_urls.add(url)
                         print(f"DOM-based XSS found in {url} with payload: {payload}")
+                        slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                        print("linkre")
                         break
         except Exception as e:
             print(f"Error checking DOM XSS in {url}: {e}")
@@ -345,6 +362,8 @@ class BlindXSSScanner:
                 if payload in response.text:
                     self.vulnerable_urls.add(url)
                     print(f"Blind XSS found in {url} with payload: {payload}")
+                    slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
+                    print("linkre")
         except Exception as e:
             print(f"Error checking Blind XSS in {url}: {e}")
 

