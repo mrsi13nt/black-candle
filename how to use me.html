@@ -7,12 +7,16 @@
 <body>
     <header>
         <h1 class="main-text">Black candle</h1>
-        <button>dark</button>
+        <button onclick=darkmode()>dark</button>
     </header>
     <hr>
     <div class="install-part">
         <h1 class="head">how to Install the tool</h1>
-        <p></p>
+        <h2>download the tool</h2>
+        <p>if you using Linux open your terminal make sure Git installed and then write <span class="code">git clone (linkre)</span><br>but if you using windows so you have 2 options : 1- to download the whole tool as a file from Github 2- to download git in your windows and open your git terminal and follow the steps of the linux</p>
+        <h2>download the packages</h2>
+        <p>now from your terminal make sure you are in the tool's folder and then run this command <span class="code">pip3 install -r requirements.txt</span><br><span class="warning">before you run this command make sure you installed python3 if isn't you can download from <a href="#">here</a></span></p>
+        <img src="src/img/install.png">
     </div>
     <div class="usage">
         <h1 class="head">Black Candle Usage</h1>
@@ -36,6 +40,7 @@
             - payload it's option make you have a choice to put custom payload you want to scan
             = by the way you can use both of switches at the same command line :)
             </p>
+            <img src="src/img/sql.png">
     </div>
     <div class="hh">
         <h2 class="head">Host header injection</h2>
@@ -46,6 +51,7 @@
             - payload it's option make you have a choice to put custom payload you want to scan
             = by the way you can use both of switches at the same command line :)
             </p>
+            <img src="src/img/hh.png">
     </div>
     <div class="js">
         <h2 class="head">Javascript scanner</h2>
@@ -56,6 +62,7 @@
             - payload it's option make you have a choice to put custom payload you want to scan
             = by the way you can use both of switches at the same command line :)
             </p>
+            <img src="src/img/js.png">
     </div>
     <div class="xss">
         <h2 class="head">XSS</h2>
@@ -65,7 +72,11 @@
             - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
             - payload it's option make you have a choice to put custom payload you want to scan
             = by the way you can use both of switches at the same command line :)
-            </p>
+        </p>
+        <img src="src/img/xss.png">
     </div>
+    <footer>
+
+    </footer>
 </body>
 </html>

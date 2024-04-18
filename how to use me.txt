@@ -51,4 +51,4 @@ and after you get the link go to config.py file and search for <custom.subdomain
 
 -------------
 
-
+for more explaining you can open how to use me.html file it have more screenshots and more explaining

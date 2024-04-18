@@ -1,6 +1,4 @@
 
-payloads_quotes = ["\"","'"]
-
 payloads_comments = [
     "--",
     "-- -",

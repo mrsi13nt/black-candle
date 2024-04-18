@@ -45,3 +45,12 @@ hr {
 .sql .head {
     color: rgb(192, 192, 85);
 }
+
+.code {
+    background-color: gray;
+}
+
+.warning {
+    color: red;
+    background-color: darkgray;
+}

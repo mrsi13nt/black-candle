@@ -7,8 +7,6 @@ from function import *
 from logo import *
 from config import *
 
-
-
 def main():
     usage = "usage: python3 black_candle.py [options] arg"
     parser = argparse.ArgumentParser(
@@ -42,45 +40,57 @@ def main():
 
 # ======== SQL =========        
     if args.url and args.data:
+        random_logo()
         url = args.url
         data = args.data
         sqli_scan(url,data,payloads)
     elif args.url and args.payload:
+        random_logo()
         url = args.url
         payload = args.payload
         sqli_scan(url,params,payload)
     elif args.url and args.data and args.payload:
+        random_logo()
         url = args.url
         payload = args.payload
         data = args.Data
         sqli_scan(url,data,payload)
 # ======== Host Header Injection =========
     elif args.hhi and args.url:
+        random_logo()
         hhi(args.url,None)
     elif args.hhi and args.host and args.url:
+        random_logo()
         hhi(args.url, args.host)
 # ======== Scan Java Script Files =========
     elif args.js:
+        random_logo()
         js_scanner(args.url)
 # ======== Scan XSS =========
     elif args.reflected:
+        random_logo()
         scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
         scanner.crawl_and_scan()
     elif args.dom:
+        random_logo()
         DOMXSSScanner(args.url,dom_based_xss_payloads)
         DOMXSSScanner.crawl_and_scan()
     elif args.blind:
+        random_logo()
         BlindXSSScanner(args.url,blind_xss_payloads)
         BlindXSSScanner.crawl_and_scan()
     elif args.reflected and args.waf:
+        random_logo()
         scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
         scanner.crawl_and_scan(waf_bypass)
     elif args.dom and args.waf:
+        random_logo()
         DOMXSSScanner(args.url,dom_based_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
         DOMXSSScanner.crawl_and_scan(waf_bypass)
     elif args.blind and args.waf:
+        random_logo()
         BlindXSSScanner(args.url,blind_xss_payloads)
         waf_bypass = WAFBypass(enable_bypass=True)
         BlindXSSScanner.crawl_and_scan(waf_bypass)
