@@ -11,7 +11,6 @@ a basic web scanner for developers
 | -hh             | Run host header injection scanner                                             |
 | --host          | Add custom host header (e.g. --host "www.ping.com")                          |
 | -js             | Scan all java script files of full website from api keys and more...         |
-| -w              | Using simple WAF detector and trying to bypass it                            |
 | -rf             | Scan for reflected XSS                                                        |
 | -d              | Scan for DOM XSS                                                             |
 | -b              | Scan for blind xss                                                            |

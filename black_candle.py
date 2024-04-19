@@ -23,7 +23,6 @@ def main():
     js_group = parser.add_argument_group('JS scan')
     js_group.add_argument('-js', dest='js', action='store_true' ,help='scan all java script files of full website from api keys and more..')
     xss_group = parser.add_argument_group('XSS')
-    xss_group.add_argument('-w', dest='waf', action='store_true', help='using simple WAF detector and trying to bypass it')
     xss_group.add_argument('-rf', dest='reflected', action='store_true', help='scan for reflected XSS')
     xss_group.add_argument('-d', dest='dom', action='store_true', help='scan for DOM XSS')
     xss_group.add_argument('-b', dest='blind',action='store_true' ,help='scan for blind xss')
@@ -34,7 +33,7 @@ def main():
 
     # check the target url or list
     if not args.url:
-        print("\033[31mError: \033[0mEither -u/--url or -l/--list option is required.")
+        print("[\033[31mError\033[0m] Either -u/--url or -l/--list option is required.")
         parser.print_help()
         sys.exit(1)
 
@@ -79,22 +78,8 @@ def main():
         random_logo()
         BlindXSSScanner(args.url,blind_xss_payloads)
         BlindXSSScanner.crawl_and_scan()
-    elif args.reflected and args.waf:
-        random_logo()
-        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
-        waf_bypass = WAFBypass(enable_bypass=True)
-        scanner.crawl_and_scan(waf_bypass)
-    elif args.dom and args.waf:
-        random_logo()
-        DOMXSSScanner(args.url,dom_based_xss_payloads)
-        waf_bypass = WAFBypass(enable_bypass=True)
-        DOMXSSScanner.crawl_and_scan(waf_bypass)
-    elif args.blind and args.waf:
-        random_logo()
-        BlindXSSScanner(args.url,blind_xss_payloads)
-        waf_bypass = WAFBypass(enable_bypass=True)
-        BlindXSSScanner.crawl_and_scan(waf_bypass)
     else:
+        print("[\033[31mError\033[0m]")
         slowprint("please try again with true usage")
         parser.print_help()
         sys.exit(1)

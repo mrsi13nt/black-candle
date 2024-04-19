@@ -9,7 +9,7 @@ from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_
 from config import error_based_payloads as ebp
 
 
-# Suppress only the InsecureRequestWarning caused by skipping certificate verification
+# skipping certificate verification
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 def slowprint(s):
@@ -32,11 +32,11 @@ def sqli_scan(url, parameters, payloads):
             if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
                 new_url = url + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)
                 new_url = url + "?" + parameter + "=" + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
 
             # Check if the response contains any of the SQL error messages
             for error_message in errors_msgs:
@@ -54,13 +54,13 @@ def sqli_scan(url, parameters, payloads):
                 start_time = time.time()
                 response = requests.get(url + payload)
                 new_url = url + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
                 execution_time = time.time() - start_time
             else:
                 start_time = time.time()
                 response = requests.get(url + "?" + parameter + "=" + payload)
                 new_url = url + "?" + parameter + "=" + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
                 execution_time = time.time() - start_time
 
             # Check if the response contains the specified payload
@@ -79,13 +79,13 @@ def sqli_scan(url, parameters, payloads):
                 start_time = time.time()
                 response = requests.get(url + payload)
                 new_url = url + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
                 execution_time = time.time() - start_time
             else:
                 start_time = time.time()
                 response = requests.get(url + "?" + parameter + "=" + payload)
                 new_url = url + "?" + parameter + "=" + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
                 execution_time = time.time() - start_time
 
             # Check if the execution time is significantly different from the default execution time
@@ -102,11 +102,11 @@ def sqli_scan(url, parameters, payloads):
             if '?' in url and '=' in url: #check if url have parameter
                 response = requests.get(url + payload)
                 new_url = url + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
             else:
                 response = requests.get(url + "?" + parameter + "=" + payload)
                 new_url = url + "?" + parameter + "=" + payload
-                print('trying.. '+ new_url)
+                print('[\033[32m+\033[0m] trying.. '+ new_url)
 
             # Check if the response contains the specified payload
             if payload in response.text:
@@ -148,10 +148,10 @@ def js_scanner(url): # scan for api key or any secrets in java script files
                 js_files = [urljoin(url, js_file) for js_file in js_files]
                 return js_files
             else:
-                print(f"Failed to retrieve content from {url}. Status code: {response.status_code}")
+                print(f"[\033[31mError\033[0m] Failed to retrieve content from {url}. Status code: {response.status_code}")
                 return []
         except Exception as e:
-            print(f"Error extracting JS files from {url}: {e}")
+            print(f"[\033[32m+\033[0m] extracting JS files from {url}: {e}")
             return []
 
     def crawl_js_files(start_url, depth=3, output_file='js_files.txt'):
@@ -166,7 +166,7 @@ def js_scanner(url): # scan for api key or any secrets in java script files
 
                 if url not in visited:
                     visited.add(url)
-                    print(f"Crawling {url}...")
+                    print(f"[\033[32m+\033[0m] Crawling {url}...")
                     js_files = extract_js_files(url)
                     for js_file in js_files:
                         file.write(js_file + '\n')
@@ -199,7 +199,7 @@ def js_scanner(url): # scan for api key or any secrets in java script files
                 elif 'html' in content_type:
                     api_keys = extract_api_keys_from_html(response.text)
                 else:
-                    print(f"Unsupported content type for {url}")
+                    print(f"[\033[31mError\033[0m] Unsupported content type for {url}")
                     return
 
                 if api_keys:
@@ -209,9 +209,9 @@ def js_scanner(url): # scan for api key or any secrets in java script files
                 else:
                     print(f"No API keys found in {url}")
             else:
-                print(f"Failed to fetch {url}: {response.status_code}")
+                print(f"[\033[31mError\033[0m] Failed to fetch {url}: {response.status_code}")
         except requests.exceptions.RequestException as e:
-            print(f"Error fetching {url}: {e}")
+            print(f"[\033[31mError\033[0m] fetching {url}: {e}")
 
     def check_wordlist(wordlist_file):
         with open(wordlist_file, 'r') as file:
@@ -231,7 +231,7 @@ def send_request(url, payload):
         if response.status_code == 200 and payload in response.text:
             return True
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+        print(f"[\033[31mError\033[0m] An error occurred: {e}")
 
     return False
 
@@ -250,14 +250,14 @@ class ReflectedXSSScanner:
         try:
             response = requests.get(url, headers=headers, timeout=5)
             if response.status_code != 200:
-                print(f"Error fetching URLs from {url}: {response.status_code}")
+                print(f"[\033[31mError\033[0m] fetching URLs from {url}: {response.status_code}")
                 return []
             soup = BeautifulSoup(response.text, 'html.parser')
             links = soup.find_all('a', href=True)
             urls = [urljoin(url, link['href']) for link in links]
             return urls
         except Exception as e:
-            print(f"Error fetching URLs from {url}: {e}")
+            print(f"[\033[31mError\033[0m] fetching URLs from {url}: {e}")
             return []
 
     def _check_reflected_xss(self, url):
@@ -265,7 +265,7 @@ class ReflectedXSSScanner:
         try:
             response = requests.get(url, headers=headers, timeout=5)
             if response.status_code != 200:
-                print(f"Error checking reflected XSS in {url}: {response.status_code}")
+                print(f"[\033[32m+\033[0m] checking reflected XSS in {url}: {response.status_code}")
                 return
             soup = BeautifulSoup(response.text, 'html.parser')
             forms = soup.find_all('form')
@@ -286,7 +286,7 @@ class ReflectedXSSScanner:
                                 slowprint("You can read this article to learn more about this vulnerability and how to fix it:")
                                 print("https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)")
         except Exception as e:
-            print(f"Error checking reflected XSS in {url}: {e}")
+            print(f"[\033[32m+\033[0m] checking reflected XSS in {url}: {e}")
 
     def crawl_and_scan(self):
         urls_to_scan = [self.base_url]
@@ -295,7 +295,7 @@ class ReflectedXSSScanner:
             if current_url in self.visited_urls:
                 continue
             self.visited_urls.add(current_url)
-            print(f"Scanning {current_url} for reflected XSS...")
+            print(f"[\033[32m+\033[0m] Scanning {current_url} for reflected XSS...")
             self._check_reflected_xss(current_url)
             urls_to_scan.extend(self._get_all_urls(current_url))
             time.sleep(1)
@@ -319,7 +319,7 @@ class DOMXSSScanner:
             urls = [urljoin(url, link['href']) for link in links]
             return urls
         except Exception as e:
-            print(f"Error fetching URLs from {url}: {e}")
+            print(f"[\033[31mError\033[0m] fetching URLs from {url}: {e}")
             return []
 
     def _check_dom_xss(self, url):
@@ -336,7 +336,7 @@ class DOMXSSScanner:
                         print("linkre")
                         break
         except Exception as e:
-            print(f"Error checking DOM XSS in {url}: {e}")
+            print(f"[\033[32m+\033[0m] checking DOM XSS in {url}: {e}")
 
     def crawl_and_scan(self):
         urls_to_scan = [self.base_url]
@@ -345,7 +345,7 @@ class DOMXSSScanner:
             if current_url in self.visited_urls:
                 continue
             self.visited_urls.add(current_url)
-            print(f"Scanning {current_url} for DOM-based XSS...")
+            print(f"[\033[32m+\033[0m] Scanning {current_url} for DOM-based XSS...")
             self._check_dom_xss(current_url)
             urls_to_scan.extend(self._get_all_urls(current_url))
 
@@ -365,7 +365,7 @@ class BlindXSSScanner:
             urls = [urljoin(url, link['href']) for link in links]
             return urls
         except Exception as e:
-            print(f"Error fetching URLs from {url}: {e}")
+            print(f"[\033[31mError\033[0m] fetching URLs from {url}: {e}")
             return []
 
     def _check_blind_xss(self, url):
@@ -378,7 +378,7 @@ class BlindXSSScanner:
                     slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
                     print("linkre")
         except Exception as e:
-            print(f"Error checking Blind XSS in {url}: {e}")
+            print(f"[\033[32m+\033[0m] checking Blind XSS in {url}: {e}")
 
     def crawl_and_scan(self):
         urls_to_scan = [self.base_url]
@@ -387,56 +387,10 @@ class BlindXSSScanner:
             if current_url in self.visited_urls:
                 continue
             self.visited_urls.add(current_url)
-            print(f"Scanning {current_url} for Blind XSS...")
+            print(f"[\033[32m+\033[0m] Scanning {current_url} for Blind XSS...")
             self._check_blind_xss(current_url)
             urls_to_scan.extend(self._get_all_urls(current_url))
 
-# WAF bypass
-class WAFBypass:
-    def __init__(self, enable_bypass=False):
-        self.enable_bypass = enable_bypass
-
-    def _detect_waf(self, url):
-        try:
-            response = requests.get(url)
-            if 'Web Application Firewall' in response.headers.get('Server', ''):
-                print(f"WAF detected on {url}")
-                return True
-            else:
-                print(f"No WAF detected on {url}")
-                return False
-        except Exception as e:
-            print(f"Error checking WAF in {url}: {e}")
-            return False
-
-    def _bypass_waf(self, url):
-        def xss_scan_with_waf_bypass(url, payload):
-            payloads = payload
-            # Try each payload with different techniques to bypass WAF
-            for payload in payloads:
-                try:
-                    # Encode the payload for URL parameters
-                    encoded_payload = urllib.parse.quote(payload)
-
-                    # Send the GET request with the encoded payload
-                    response = requests.get(url + "?q=" + encoded_payload)
-
-                    # Check if the payload was successfully injected
-                    if payload in response.text:
-                        print(f"XSS vulnerability detected with payload: {payload}")
-                        return True
-                except requests.RequestException as e:
-                    print(f"An error occurred: {e}")
-
-            print("No XSS vulnerability detected.")
-            return False
-        xss_scan_with_waf_bypass(url, xss_waf_payloads)
-        print(f"Bypassing WAF on {url}...")
-
-    def bypass(self, url):
-        if self.enable_bypass:
-            if self._detect_waf(url):
-                self._bypass_waf(url)
 
 
 def check_file_existence(file_path):
