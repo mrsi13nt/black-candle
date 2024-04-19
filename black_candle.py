@@ -78,6 +78,7 @@ def main():
         random_logo()
         BlindXSSScanner(args.url,blind_xss_payloads)
         BlindXSSScanner.crawl_and_scan()
+        
     else:
         print("[\033[31mError\033[0m]")
         slowprint("please try again with true usage")
