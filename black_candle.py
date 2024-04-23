@@ -38,11 +38,10 @@ def main():
         sys.exit(1)
 
 # ======== SQL =========        
-    if args.url and args.data:
+    if args.url:
         random_logo()
         url = args.url
-        data = args.data
-        sqli_scan(url,data,payloads)
+        sqli_scan(url,params,payloads)
     elif args.url and args.payload:
         random_logo()
         url = args.url
