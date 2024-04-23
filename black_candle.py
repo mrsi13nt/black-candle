@@ -15,6 +15,7 @@ def main():
                     epilog='Text at the bottom of help',
                     usage='%(prog)s -u URL')
     sql_group = parser.add_argument_group('SQL')
+    sql_group.add_argument('-sql', dest='sql', action='store_true', help='run sql scanner')
     sql_group.add_argument('--data', dest='data', metavar='"data"', help='Data string to be sent through POST (e.g. "id=1")')
     sql_group.add_argument('-p','--payload', dest='payload', metavar='payload', help='you can add custom payload' )
     hhi_group = parser.add_argument_group('Host Header Injection')
@@ -38,19 +39,24 @@ def main():
         sys.exit(1)
 
 # ======== SQL =========        
-    if args.url:
+    if args.url and args.sql:
         random_logo()
         url = args.url
         sqli_scan(url,params,payloads)
-    elif args.url and args.payload:
+    elif args.url and args.payload and args.sql:
         random_logo()
         url = args.url
         payload = args.payload
         sqli_scan(url,params,payload)
-    elif args.url and args.data and args.payload:
+    elif args.url and args.data and args.sql:
         random_logo()
         url = args.url
-        payload = args.payload
+        data = args.Data
+        sqli_scan(url,data,payloads)
+    elif args.url and args.data and args.payload and args.sql:
+        random_logo()
+        url = args.url
+        payload = args.payloadw
         data = args.Data
         sqli_scan(url,data,payload)
 # ======== Host Header Injection =========
