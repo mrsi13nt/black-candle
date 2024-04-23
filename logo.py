@@ -1,4 +1,5 @@
 import random
+import os
 
 
 logo = [
@@ -16,6 +17,12 @@ logo = [
 
 
 def random_logo():
+#for clean the screen
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+# for printing random logo
     random_s = random.choice(logo)
     print(random_s)
 

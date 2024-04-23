@@ -74,15 +74,39 @@ def main():
     elif args.reflected:
         random_logo()
         scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
-        scanner.crawl_and_scan()
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
     elif args.dom:
         random_logo()
-        DOMXSSScanner(args.url,dom_based_xss_payloads)
-        DOMXSSScanner.crawl_and_scan()
+        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads)
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
     elif args.blind:
         random_logo()
-        BlindXSSScanner(args.url,blind_xss_payloads)
-        BlindXSSScanner.crawl_and_scan()
+        scanner = BlindXSSScanner(args.url,blind_xss_payloads)
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = BlindXSSScanner(args.url,blind_xss_payloads)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
         
     else:
         print("[\033[31mError\033[0m]")
