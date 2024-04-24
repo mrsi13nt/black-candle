@@ -10,14 +10,12 @@ logo = [
 
 
 logo_menu = '''
- 
    .               .    
  .´  ·  .     .  ·  `.  Black Candle 2.0.1
  :  :  :  (\033[31m¯\033[0m)  :  :  :  web scanning tool for devolopers
  `.  ·  ` /¯\ ´  ·  .´  More info at: https://yourwebsite.com
    `     /¯¯¯\     ´  
  
-  
 '''
 
 
