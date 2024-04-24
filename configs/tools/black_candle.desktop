@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Black candle
+Exec=bash -c "python3 ~/Desktop/black-candle/black_candle.py; bash -i"
+Terminal=true
+Icon=/home/mrsilent/Downloads/1001713952907.png
+Type=Application
+Categories=Utility

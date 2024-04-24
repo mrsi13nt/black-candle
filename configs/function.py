@@ -5,8 +5,8 @@ import sys
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
-from config import error_based_payloads as ebp
+from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
+from configs.config import error_based_payloads as ebp
 
 
 

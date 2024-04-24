@@ -1,6 +1,4 @@
 requests
-time
-sys
 argparse
 re
 bs4

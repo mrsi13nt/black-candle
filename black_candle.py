@@ -1,18 +1,19 @@
+#!/usr/bin/python3
 import requests
 import sys
 import time
 import os
 import argparse
-from function import *
-from logo import *
-from config import *
+from configs.function import *
+from configs.logo import *
+from configs.config import *
 
 def main():
     usage = "usage: python3 black_candle.py [options] arg"
     parser = argparse.ArgumentParser(
                     prog='black candle',
-                    description='a simple sql scanner',
-                    epilog='Text at the bottom of help',
+                    description=logo_menu,formatter_class=argparse.RawTextHelpFormatter,
+                    epilog=examples_help,
                     usage='%(prog)s -u URL')
     sql_group = parser.add_argument_group('SQL')
     sql_group.add_argument('-sql', dest='sql', action='store_true', help='run sql scanner')
@@ -34,7 +35,7 @@ def main():
 
     # check the target url or list
     if not args.url:
-        print("[\033[31mError\033[0m] Either -u/--url or -l/--list option is required.")
+        print("[\033[31mError\033[0m] -u/--url option is required.")
         parser.print_help()
         sys.exit(1)
 
