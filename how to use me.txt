@@ -12,7 +12,8 @@ now we finished the first steps and i am gonna explain that other switches
 
 first SQLi (SQL injection)
 this vulnerability attacks the weakness parmeters in the SQL database and it's high severity or medium
-for more info check this link ("linkre")
+for more info check this link (https://owasp.org/www-community/attacks/SQL_Injection_Prevention_Cheat_Sheet)
+and more about blind SQLi (https://portswigger.net/web-security/sql-injection/blind)
 
 
 

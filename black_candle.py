@@ -29,7 +29,7 @@ def main():
     xss_group.add_argument('-d', dest='dom', action='store_true', help='scan for DOM XSS')
     xss_group.add_argument('-b', dest='blind',action='store_true' ,help='scan for blind xss')
     output_group = parser.add_argument_group('Output')
-    output_group.add_argument('-o', dest='output', metavar='string', type=argparse.FileType('w', encoding='latin-1'), help='file to write output to') #x
+    output_group.add_argument('-r', dest='output', action='store_true', help='full report for all the scanning')
     parser.add_argument('-u', '--url', dest='url', action='store', metavar='URL', help='Target URL (e.g. "http://www.site.com/vuln.php?id=1")')
     args = parser.parse_args()
 
@@ -44,28 +44,54 @@ def main():
     if args.url and args.sql:
         random_logo()
         url = args.url
-        sqli_scan(url,params,payloads)
+        sqli_scan(url,params,payloads,output_s=False)
+    elif args.url and args.sql and args.output:
+        random_logo()
+        url = args.url
+        sqli_scan(url,params,payloads,output_s=True)
     elif args.url and args.payload and args.sql:
         random_logo()
         url = args.url
         payload = args.payload
-        sqli_scan(url,params,payload)
+        sqli_scan(url,params,payload,output_s=False)
+    elif args.url and args.payload and args.sql and args.output:
+        random_logo()
+        url = args.url
+        payload = args.payload
+        sqli_scan(url,params,payload,output_s=True)
     elif args.url and args.data and args.sql:
         random_logo()
         url = args.url
         data = args.Data
-        sqli_scan(url,data,payloads)
+        sqli_scan(url,data,payloads,output_s=False)
+    elif args.url and args.data and args.sql and args.output:
+        random_logo()
+        url = args.url
+        data = args.Data
+        sqli_scan(url,data,payloads,output_s=True)
     elif args.url and args.data and args.payload and args.sql:
         random_logo()
         url = args.url
         payload = args.payloadw
         data = args.Data
-        sqli_scan(url,data,payload)
+        sqli_scan(url,data,payload,False)
+    elif args.url and args.data and args.payload and args.sql and args.output:
+        random_logo()
+        url = args.url
+        payload = args.payloadw
+        data = args.Data
+        sqli_scan(url,data,payload,output_s=True)
 # ======== Host Header Injection =========
     elif args.hhi and args.url:
         random_logo()
         hhi(args.url,None)
+    elif args.hhi and args.url and args.output:
+        random_logo()
+        hhi(args.url,None)
     elif args.hhi and args.host and args.url:
+        random_logo()
+        hhi(args.url, args.host)
+    elif args.hhi and args.host and args.url and args.output:
         random_logo()
         hhi(args.url, args.host)
 # ======== Scan Java Script Files =========
@@ -75,37 +101,73 @@ def main():
 # ======== Scan XSS =========
     elif args.reflected:
         random_logo()
-        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
+        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=False)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads)
+                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=False)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
+    elif args.reflected and args.output:
+        random_logo()
+        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=True)
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=True)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
     elif args.dom:
         random_logo()
-        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads)
+        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=False)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads)
+                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=False)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
+    elif args.dom and args.output:
+        random_logo()
+        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=True)
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=True)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
     elif args.blind:
         random_logo()
-        scanner = BlindXSSScanner(args.url,blind_xss_payloads)
+        scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=False)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = BlindXSSScanner(args.url,blind_xss_payloads)
+                scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=False)
+                scanner.crawl_and_scan()
+            else:
+                sys.exit()
+    elif args.blind and args.output:
+        random_logo()
+        scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=True)
+        try:
+            scanner.crawl_and_scan()
+        except KeyboardInterrupt:
+            if asking():
+                random_logo()
+                scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=True)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
