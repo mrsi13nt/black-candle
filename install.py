@@ -19,7 +19,7 @@ Exec=bash -c "python3 {home_directory}/Desktop/black-candle/black_candle.py; bas
 Terminal=true
 Icon={home_directory}/Desktop/black-candle/configs/logo.png
 Type=Application
-Categories=Utility
+Categories=03-webapp-analysis;Utility;
 '''
 
 
