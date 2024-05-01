@@ -3,27 +3,25 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="src/style.css">
+    <link rel="icon" type="image/x-icon" href="src/img/logo.png"> <!--for favicon-->
     <title>Black Candle</title>
 </head>
 <body>
     <header>
-        <img class="logo" src="src/img/logo.jpeg">
-        <h1 class="main-text">Black candle</h1>
-        <div class="dark-mode">
-            <p class="dark">dark mode</p>
-        </div>
+        <img class="logo" src="src/img/logo.png">
+        <h1 class="header-text">Black candle</h1>
+        <button id="dark-mode-btn">Dark Mode</button>
     </header>
     <hr>
     <div class="install-part">
         <h1 class="head">how to Install the tool</h1>
         <h2>download the tool</h2>
         <p>if you using Linux open your terminal make sure Git installed and then write <span class="code">git clone (linkre)</span><br>but if you using windows so you have 2 options : 1- to download the whole tool as a file from Github 2- to download git in your windows and open your git terminal and follow the steps of the linux</p>
-        <h2>download the packages</h2>
+        <h2>install the tool</h2>
         <p>now from your terminal make sure you are in the tool's folder and then run this command <span class="code">pip3 install -r requirements.txt</span><br><span class="warning">before you run this command make sure you installed python3 if isn't you can download from <a href="#">here</a></span></p>
-        <img src="src/img/install.png">
     </div>
-    <div class="usage">
-        <h1 class="head">Black Candle Usage</h1>
+    <div class="options-container">
+        <h1 class="main-head">Black Candle Options</h1>
         <table id="options-table">
             <thead>
                 <tr>
@@ -31,54 +29,103 @@
                     <th>Description</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <tr>
+                    <td>-u, --url</td>
+                    <td>Target URL (e.g. "http://www.site.com/vuln.php?id=1")</td>
+                </tr>
+                <tr>
+                    <td>--data</td>
+                    <td>Data string to be sent through POST (e.g. "data=1")</td>
+                </tr>
+                <tr>
+                    <td>-p, --payload</td>
+                    <td>You can add custom payload</td>
+                </tr>
+                <tr>
+                    <td>-hh</td>
+                    <td>Run host header injection scanner</td>
+                </tr>
+                <tr>
+                    <td>--host</td>
+                    <td>Add custom host header (e.g. --host "www.ping.com")</td>
+                </tr>
+                <tr>
+                    <td>-js</td>
+                    <td>Scan all JavaScript files of the full website for API keys and more..</td>
+                </tr>
+                <tr>
+                    <td>-rf</td>
+                    <td>Scan for reflected XSS</td>
+                </tr>
+                <tr>
+                    <td>-d</td>
+                    <td>Scan for DOM XSS</td>
+                </tr>
+                <tr>
+                    <td>-b</td>
+                    <td>Scan for blind XSS</td>
+                </tr>
+                <tr>
+                    <td>-o</td>
+                    <td>File to write output to</td>
+                </tr>
+            </tbody>
         </table>
     </div>
+    <div class="container">
+        <section class="feature sql">
+            <h2 class="head">SQLi</h2>
+            <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
+                <br>
+                now how we can use data or payload and what they do!
+                - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
+                - payload it's option make you have a choice to put custom payload you want to scan
+                = by the way you can use both of switches at the same command line :)
+                </p>
+                <img src="src/img/sql.png" class="popup-image" onclick="openPopup('src/img/sql.png')">
+        </section>
+        <section class="feature hh">
+            <h2 class="head">Host header injection</h2>
+            <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
+                <br>
+                now how we can use data or payload and what they do!
+                - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
+                - payload it's option make you have a choice to put custom payload you want to scan
+                = by the way you can use both of switches at the same command line :)
+                </p>
+                <img src="src/img/hh.png" class="popup-image" onclick="openPopup('src/img/hh.png')">
+        </section>
+        <section class="feature js">
+            <h2 class="head">Javascript scanner</h2>
+            <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
+                <br>
+                now how we can use data or payload and what they do!
+                - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
+                - payload it's option make you have a choice to put custom payload you want to scan
+                = by the way you can use both of switches at the same command line :)
+                </p>
+                <img src="src/img/js.png" class="popup-image" onclick="openPopup('src/img/js.png')">
+        </section>
+        <section class="feature xss">
+            <h2 class="head">XSS</h2>
+            <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
+                <br>
+                now how we can use data or payload and what they do!
+                - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
+                - payload it's option make you have a choice to put custom payload you want to scan
+                = by the way you can use both of switches at the same command line :)
+            </p>
+            <img src="src/img/xss.png" class="popup-image" onclick="openPopup('src/img/xss.png')">
+        </section>
+    </div>
+    <!-- Popup HTML -->
+    <div id="popup" class="popup">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <img id="popup-image" class="popup-content">
+    </div>
+
     <script src="src/script.js"></script>
-    <div class="sql">
-        <h2 class="head">SQLi</h2>
-        <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
-            <br>
-            now how we can use data or payload and what they do!
-            - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
-            - payload it's option make you have a choice to put custom payload you want to scan
-            = by the way you can use both of switches at the same command line :)
-            </p>
-            <img src="src/img/sql.png">
-    </div>
-    <div class="hh">
-        <h2 class="head">Host header injection</h2>
-        <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
-            <br>
-            now how we can use data or payload and what they do!
-            - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
-            - payload it's option make you have a choice to put custom payload you want to scan
-            = by the way you can use both of switches at the same command line :)
-            </p>
-            <img src="src/img/hh.png">
-    </div>
-    <div class="js">
-        <h2 class="head">Javascript scanner</h2>
-        <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
-            <br>
-            now how we can use data or payload and what they do!
-            - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
-            - payload it's option make you have a choice to put custom payload you want to scan
-            = by the way you can use both of switches at the same command line :)
-            </p>
-            <img src="src/img/js.png">
-    </div>
-    <div class="xss">
-        <h2 class="head">XSS</h2>
-        <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
-            <br>
-            now how we can use data or payload and what they do!
-            - data is specific parameter you want to scan like "id=2" this is exactly what you will write after switch --data
-            - payload it's option make you have a choice to put custom payload you want to scan
-            = by the way you can use both of switches at the same command line :)
-        </p>
-        <img src="src/img/xss.png">
-    </div>
     <footer>
 
     </footer>

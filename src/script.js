@@ -1,33 +1,27 @@
-const options = [
-    { name: 'usage', description: 'usage: python3 black_candle.py [options] arg' },
-    { name: '-u, --url', description: 'Target URL (e.g. "http://www.site.com/vuln.php?id=1")' },
-    { name: 'SQL'},
-    { name: '--data', description: 'Data string to be sent through POST (e.g. "data=1")' },
-    { name: '-p, --payload', description: 'you can add custom payload' },
-    {name: 'Host header injection'},
-    { name: '-hh', description: 'run host header injection scanner' },
-    { name: '--host', description: 'add custom host header (e.g. --host "www.ping.com")' },
-    {name: 'Javascript scanner'},
-    { name: '-js', description: 'scan all java script files of full website from api keys and more..' },
-    {name: 'XSS'},
-    { name: '-rf', description: 'scan for reflected XSS' },
-    { name: '-d', description: 'scan for DOM XSS' },
-    { name: '-b', description: 'scan for blind xss' },
-    { name: '-o', description: 'file to write output to' }
-]
+function openPopup(imageUrl) {
+    document.getElementById('popup-image').src = imageUrl;
+    document.getElementById('popup').style.display = 'block';
+}
 
-const tableBody = document.querySelector('#options-table tbody')
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
 
-options.forEach(option => {
-    const row = document.createElement('tr')
-    const nameCell = document.createElement('td')
-    const descriptionCell = document.createElement('td')
 
-    nameCell.textContent = option.name
-    descriptionCell.textContent = option.description
+const darkModeBtn = document.getElementById('dark-mode-btn');
+let isDarkMode = false; // Initial state
 
-    row.appendChild(nameCell)
-    row.appendChild(descriptionCell)
+darkModeBtn.addEventListener('click', () => {
+    isDarkMode = !isDarkMode; // Toggle dark mode state
+    updateDarkMode();
+});
 
-    tableBody.appendChild(row)
-})
+function updateDarkMode() {
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        darkModeBtn.textContent = 'Light Mode';
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeBtn.textContent = 'Dark Mode';
+    }
+}
