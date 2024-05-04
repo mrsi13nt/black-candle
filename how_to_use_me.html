@@ -20,8 +20,8 @@
         <h2>install the tool</h2>
         <p>now from your terminal make sure you are in the tool's folder and then run this command <span class="code">pip3 install -r requirements.txt</span><br><span class="warning">before you run this command make sure you installed python3 if isn't you can download from <a href="#">here</a></span></p>
     </div>
-    <div class="options-container">
-        <h1 class="main-head">Black Candle Options</h1>
+    <div class="options-container" id="options-contain">
+        <h1 id="main-head">Black Candle Options</h1>
         <table id="options-table">
             <thead>
                 <tr>
@@ -74,8 +74,8 @@
         </table>
     </div>
     <div class="container">
-        <section class="feature sql">
-            <h2 class="head">SQLi</h2>
+        <section class="feature" id="sql">
+            <h3 class="head">SQLi</h3>
             <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
                 <br>
                 now how we can use data or payload and what they do!
@@ -85,8 +85,8 @@
                 </p>
                 <img src="src/img/sql.png" class="popup-image" onclick="openPopup('src/img/sql.png')">
         </section>
-        <section class="feature hh">
-            <h2 class="head">Host header injection</h2>
+        <section class="feature" id="hh">
+            <h3 class="head">Host header injection</h3>
             <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
                 <br>
                 now how we can use data or payload and what they do!
@@ -96,8 +96,8 @@
                 </p>
                 <img src="src/img/hh.png" class="popup-image" onclick="openPopup('src/img/hh.png')">
         </section>
-        <section class="feature js">
-            <h2 class="head">Javascript scanner</h2>
+        <section class="feature" id="js">
+            <h3 class="head">Javascript scanner</h3>
             <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
                 <br>
                 now how we can use data or payload and what they do!
@@ -107,8 +107,8 @@
                 </p>
                 <img src="src/img/js.png" class="popup-image" onclick="openPopup('src/img/js.png')">
         </section>
-        <section class="feature xss">
-            <h2 class="head">XSS</h2>
+        <section class="feature" id="xss">
+            <h3 class="head">XSS</h3>
             <p>* SQLi scanner will run automatically when you input the url with data or the url with payload
                 <br>
                 now how we can use data or payload and what they do!
@@ -126,7 +126,16 @@
     </div>
 
     <script src="src/script.js"></script>
-    <footer>
+    <footer class="footer" id="foot">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Disclaimer</h3>
+                <p>This is a disclaimer text. Please read it carefully</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Black Candle. All rights reserved.
+        </div>
 
     </footer>
 </body>

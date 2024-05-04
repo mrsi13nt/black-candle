@@ -6,7 +6,7 @@ body {
     padding: 0;
 }
 
-.main-head {
+#main-head {
     font-size: 24px;
     margin-bottom: 20px;
     color: black;
@@ -16,7 +16,7 @@ body {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -96,6 +96,7 @@ hr {
 .head {
     text-decoration: underline;
     text-decoration-color: rgb(3, 63, 3);
+    color: #449c95;
 }
 
 .code {
@@ -134,7 +135,6 @@ header {
 }
 
 .feature {
-    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -147,7 +147,6 @@ header {
 
 .feature p {
     margin-bottom: 20px;
-    color: black;
 }
 
 .feature img {
@@ -191,4 +190,35 @@ header {
     font-size: 30px;
     cursor: pointer;
     z-index: 99999;
+}
+
+
+
+/* footer */
+
+.footer {
+    background-color: #bdb9b9;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.footer-column {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-column h3 {
+    margin-bottom: 10px;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 14px;
 }
