@@ -3,9 +3,10 @@ import requests
 import re
 import sys
 from bs4 import BeautifulSoup
+import subprocess
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
+from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads,__version__
 from configs.config import error_based_payloads as ebp
 
 
@@ -675,6 +676,22 @@ class BlindXSSScanner:
             urls_to_scan.extend(self._get_all_urls(current_url))
 
 
+
+def update():
+    response = requests.get('')
+    if __version__ in response.text :
+        pass
+    else:
+        print("\nthere is new version, want to update ? (Y/N)\n")
+        up = input(">> ").upper
+        if up == "Y":
+            subprocess.run("",shell=True)
+        elif up == "N":
+            subprocess.run("",shell=True)
+        else:
+            slowprint("wrong answer")
+            sys.exit(2)
+            
 
 
 def check_file_existence(file_path):
