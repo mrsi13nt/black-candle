@@ -28,7 +28,7 @@ def slowprint(s):
 
 # quistion for exiting
 def asking():
-    slowprint("[\033[32m+\033[0m] Do you want to \033[32mcontinue\033[0m attacking, or \033[31mexit\033[0m (\033[32mc\033[0m, \033[31me\033[0m)?")
+    print("[\033[32m+\033[0m] Do you want to \033[32mcontinue\033[0m attacking, or \033[31mexit\033[0m (\033[32mc\033[0m, \033[31me\033[0m)?")
     answer = input(">> ")
     if answer == 'continue' or answer == 'c':
         slowprint("sorry we will start over")
@@ -687,7 +687,7 @@ def update():
         if up == "Y":
             subprocess.run("",shell=True)
         elif up == "N":
-            subprocess.run("",shell=True)
+            pass
         else:
             slowprint("wrong answer")
             sys.exit(2)
