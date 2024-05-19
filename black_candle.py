@@ -35,8 +35,7 @@ def main():
 
     # check the target url or list
     if not args.url:
-        print(logo_menu)
-        print("[\033[31mError\033[0m] -u/--url option is required.")
+        slowprint("[\033[31mError\033[0m] -u/--url option is required.")
         parser.print_help()
         sys.exit(1)
 
@@ -175,7 +174,6 @@ def main():
     else:
         print("[\033[31mError\033[0m]")
         slowprint("please try again with true usage")
-        print(logo_menu)
         parser.print_help()
         sys.exit(1)
 
