@@ -12,7 +12,7 @@ def main():
     usage = "usage: python3 black_candle.py [options] arg"
     parser = argparse.ArgumentParser(
                     prog='black candle',
-                    description="logo_menu",formatter_class=argparse.RawTextHelpFormatter,
+                    description=logo_menu,formatter_class=argparse.RawTextHelpFormatter,
                     epilog=examples_help,
                     usage='%(prog)s -u URL')
     sql_group = parser.add_argument_group('SQL')
@@ -175,8 +175,13 @@ def main():
     else:
         print("[\033[31mError\033[0m]")
         slowprint("please try again with true usage")
+        print(logo_menu)
         parser.print_help()
         sys.exit(1)
+
+
+
+
 
 if __name__ == '__main__':
     # update()

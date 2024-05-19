@@ -46,15 +46,31 @@ logo = [
 ]
 
 
-logo_menu = '''
-   .               .    
- .´  ·  .     .  ·  `.  Black Candle 2.0.1
- :  :  :  (\033[31m¯\033[0m)  :  :  :  web scanning tool for devolopers
- `.  ·  ` /¯\ ´  ·  .´  devoloped by : Abd ElRahman Mounir
-   `     /¯¯¯\     ´  
+# logo_menu = '''
+#    .               .    
+#  .´  ·  .     .  ·  `.  Black Candle 2.0.1
+#  :  :  :  (\033[31m¯\033[0m)  :  :  :  web scanning tool for devolopers
+#  `.  ·  ` /¯\ ´  ·  .´  devoloped by : Abd ElRahman Mounir
+#    `     /¯¯¯\     ´  
  
-'''
+# '''
 
+logo_menu = '''
+*******************************************************************
+*     ____  _            _     ____                _ _            *
+*    | __ )| | __ _  ___| | __/ ___|__ _ _ __   __| | | ___       *
+*    |  _ \| |/ _` |/ __| |/ / |   / _` | '_ \ / _` | |/ _ \\      *
+*    | |_) | | (_| | (__|   <| |__| (_| | | | | (_| | |  __/      *
+*    |____/|_|\__,_|\___|_|\_\\____\__,_|_| |_|\__,_|_|\___|       *
+*                                                                 *
+*                                                                 *
+* Black Candle 1.2                                                *
+* Coded by Abd El Rahman Mounir                                   *
+* Red Teamer and cybersecurity student                            *
+* cmartorella@edge-security.com                                   *
+*                                                                 *
+*******************************************************************
+'''
 
 examples_help = '''examples:
 black_candle -u www.google.com -sql'''
