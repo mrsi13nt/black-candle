@@ -42,18 +42,17 @@ logo = [
                          5X2A@ AsX5                         
                                                             
 ''',
-    '''logo3'''
+    '''
+   .               .    
+ .´  ·  .     .  ·  `.  Black Candle 2.0.1
+ :  :  :  (\033[31m¯\033[0m)  :  :  :  web scanning tool for devolopers
+ `.  ·  ` /¯\ ´  ·  .´  devoloped by : Abd ElRahman Mounir
+   `     /¯¯¯\     ´  
+ 
+'''
 ]
 
 
-# logo_menu = '''
-#    .               .    
-#  .´  ·  .     .  ·  `.  Black Candle 2.0.1
-#  :  :  :  (\033[31m¯\033[0m)  :  :  :  web scanning tool for devolopers
-#  `.  ·  ` /¯\ ´  ·  .´  devoloped by : Abd ElRahman Mounir
-#    `     /¯¯¯\     ´  
- 
-# '''
 
 logo_menu = '''
 *******************************************************************

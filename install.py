@@ -22,11 +22,11 @@ Type=Application
 Categories=03-webapp-analysis;Utility;
 '''
 
-
-if os.name == 'nt':
+os_type = check_os()
+if os_type == 'Windows':
     print("installing...")
     print("[\033[32m+\033[0m] installed")
-else:
+elif os_type == 'Linux':
     subprocess.run('pip3 install -r requirements.txt',shell=True,check=True)
     subprocess.run('chmod +x black_candle.py', shell=True, check=True)
     subprocess.run('sudo update-desktop-database', shell=True, check=True)
@@ -37,12 +37,17 @@ else:
     subprocess.run(f"mv {current_directory}/src {home_directory}/.local/black_candle",shell=True)
     subprocess.run(f"mv {current_directory}/how_to_use_me.txt {home_directory}/.local/black_candle",shell=True)
     subprocess.run(f'sudo ln -sf {home_directory}/.local/black_candle/black_candle.py /usr/bin/black_candle', shell=True, check=True)
+elif os_type == 'Darwin': #macos
+    subprocess.run('',shell=True)
+else:
+    print("Unsupported operating system.")
+    exit(1)
 
-    # the modified .desktop file
-    with open(desktop_file_path, 'w') as desktop_file:
-        desktop_file.write(desktop_template)
+# the modified .desktop file
+with open(desktop_file_path, 'w') as desktop_file:
+    desktop_file.write(desktop_template)
 
-    # set permission on the .desktop file
-    os.chmod(desktop_file_path, 0o755)
+# set permission on the .desktop file
+os.chmod(desktop_file_path, 0o755)
 
-    print("[\033[32m+\033[0m] Installation completed successfully.")
+print("[\033[32m+\033[0m] Installation completed successfully.")

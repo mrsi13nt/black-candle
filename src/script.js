@@ -61,4 +61,18 @@ function updateDarkMode() {
 }
 
 
-// scroll up icon
+// Scroll to top button appear
+document.addEventListener('scroll', () => {
+    const scrollToTop = document.body.querySelector('.scroll-to-top');
+    if (document.documentElement.scrollTop > 100) {
+        if (!scrollToTopVisible) {
+            fadeIn(scrollToTop);
+            scrollToTopVisible = true;
+        }
+    } else {
+        if (scrollToTopVisible) {
+            fadeOut(scrollToTop);
+            scrollToTopVisible = false;
+        }
+    }
+})

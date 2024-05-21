@@ -222,3 +222,83 @@ header {
     margin-top: 20px;
     font-size: 14px;
 }
+
+
+
+
+
+
+
+
+.scroll-to-top {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    display: none;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: #fff;
+    background: rgba(52, 58, 64, 0.5);
+    line-height: 50px;
+  }
+  .scroll-to-top:focus, .scroll-to-top:hover {
+    color: #fff;
+  }
+  .scroll-to-top:hover {
+    background: #343a40;
+  }
+  .scroll-to-top i {
+    font-weight: 800;
+  }
+
+
+
+
+  .rounded {
+    border-radius: 0.25rem !important;
+  }
+  
+  .rounded-0 {
+    border-radius: 0 !important;
+  }
+  
+  .rounded-1 {
+    border-radius: 0.2rem !important;
+  }
+  
+  .rounded-2 {
+    border-radius: 0.25rem !important;
+  }
+  
+  .rounded-3 {
+    border-radius: 0.3rem !important;
+  }
+  
+  .rounded-circle {
+    border-radius: 50% !important;
+  }
+  
+  .rounded-pill {
+    border-radius: 50rem !important;
+  }
+  
+  .rounded-top {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+  }
+  
+  .rounded-end {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+  }
+  
+  .rounded-bottom {
+    border-bottom-right-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+  }
+  
+  .rounded-start {
+    border-bottom-left-radius: 0.25rem !important;
+    border-top-left-radius: 0.25rem !important;
+  }
