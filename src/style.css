@@ -230,75 +230,89 @@ header {
 
 
 
-.scroll-to-top {
-    position: fixed;
-    right: 15px;
-    bottom: 15px;
-    display: none;
-    width: 50px;
-    height: 50px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.install-part {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.install-part h1.head {
+    font-size: 2em;
+    color: #333333;
     text-align: center;
-    color: #fff;
-    background: rgba(52, 58, 64, 0.5);
-    line-height: 50px;
-  }
-  .scroll-to-top:focus, .scroll-to-top:hover {
-    color: #fff;
-  }
-  .scroll-to-top:hover {
-    background: #343a40;
-  }
-  .scroll-to-top i {
-    font-weight: 800;
-  }
+    margin-bottom: 20px;
+}
+
+.install-part h2 {
+    font-size: 1.5em;
+    color: #555555;
+    margin-top: 20px;
+}
+
+.install-part p {
+    font-size: 1em;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.install-part .code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e8e8e8;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.install-part .warning {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.install-part a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.install-part a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #cccccc;
+    margin: 20px 0;
+}
 
 
+/* Scroll to Top Button */
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #0066cc;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-
-  .rounded {
-    border-radius: 0.25rem !important;
-  }
-  
-  .rounded-0 {
-    border-radius: 0 !important;
-  }
-  
-  .rounded-1 {
-    border-radius: 0.2rem !important;
-  }
-  
-  .rounded-2 {
-    border-radius: 0.25rem !important;
-  }
-  
-  .rounded-3 {
-    border-radius: 0.3rem !important;
-  }
-  
-  .rounded-circle {
-    border-radius: 50% !important;
-  }
-  
-  .rounded-pill {
-    border-radius: 50rem !important;
-  }
-  
-  .rounded-top {
-    border-top-left-radius: 0.25rem !important;
-    border-top-right-radius: 0.25rem !important;
-  }
-  
-  .rounded-end {
-    border-top-right-radius: 0.25rem !important;
-    border-bottom-right-radius: 0.25rem !important;
-  }
-  
-  .rounded-bottom {
-    border-bottom-right-radius: 0.25rem !important;
-    border-bottom-left-radius: 0.25rem !important;
-  }
-  
-  .rounded-start {
-    border-bottom-left-radius: 0.25rem !important;
-    border-top-left-radius: 0.25rem !important;
-  }
+#scrollToTopBtn:hover {
+    background-color: #005bb5;
+}

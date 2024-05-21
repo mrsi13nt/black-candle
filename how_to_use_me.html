@@ -139,8 +139,33 @@
 
     </footer>
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <button id="scrollToTopBtn" title="Go to top">↑</button>
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.onclick = function() {
+            scrollToTop();
+        };
+
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 </body>
 </html>
