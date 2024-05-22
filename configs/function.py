@@ -678,14 +678,14 @@ class BlindXSSScanner:
 
 
 def update():
-    response = requests.get('')
+    response = requests.get('https://www.github.com/mrsi13nt/black-candle/configs/config.py')
     if __version__ in response.text :
         pass
     else:
         print("\nthere is new version, want to update ? (Y/N)\n")
         up = input(">> ").upper
         if up == "Y":
-            subprocess.run("",shell=True)
+            subprocess.run("ds",shell=True)
         elif up == "N":
             pass
         else:
