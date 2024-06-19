@@ -7,6 +7,7 @@ import argparse
 from configs.function import *
 from configs.logo import *
 from configs.config import *
+import webbrowser
 
 def main():
     usage = "usage: python3 black_candle.py [options] arg"
@@ -31,156 +32,87 @@ def main():
     output_group = parser.add_argument_group('Output')
     output_group.add_argument('-r', dest='output', action='store_true', help='full report for all the scanning')
     parser.add_argument('-u', '--url', dest='url', action='store', metavar='URL', help='Target URL (e.g. "http://www.site.com/vuln.php?id=1")')
+    parser.add_argument('-help', action='store_true', dest='web', help="for more info and tips")
     args = parser.parse_args()
 
-    # check the target url or list
-    if not args.url:
+    # Check if URL is provided
+    if not args.url and not args.web:
         slowprint("[\033[31mError\033[0m] -u/--url option is required.")
         parser.print_help()
         sys.exit(1)
 
-# ======== SQL =========        
-    if args.url and args.sql:
-        random_logo()
+    if args.web:
+        webbrowser.open("how_to_use_me.html")
+        return
+
+    # Print the random logo
+    random_logo()
+
+    # Handle SQL scanning
+    if args.sql:
         url = args.url
-        sqli_scan(url,params,payloads,output_s=False)
-    elif args.url and args.sql and args.output:
-        random_logo()
+        params = args.data if args.data else {}
+        payloads = [args.payload] if args.payload else []
+        output_s = args.output if args.output else False
+        sqli_scan(url, params, payloads, output_s)
+
+    # Handle Host Header Injection
+    if args.hhi:
         url = args.url
-        sqli_scan(url,params,payloads,output_s=True)
-    elif args.url and args.payload and args.sql:
-        random_logo()
+        host = args.host if args.host else None
+        hhi(url, host)
+
+    # Handle JavaScript scanning
+    if args.js:
         url = args.url
-        payload = args.payload
-        sqli_scan(url,params,payload,output_s=False)
-    elif args.url and args.payload and args.sql and args.output:
-        random_logo()
+        js_scanner(url)
+
+    # Handle Reflected XSS scanning
+    if args.reflected:
         url = args.url
-        payload = args.payload
-        sqli_scan(url,params,payload,output_s=True)
-    elif args.url and args.data and args.sql:
-        random_logo()
-        url = args.url
-        data = args.Data
-        sqli_scan(url,data,payloads,output_s=False)
-    elif args.url and args.data and args.sql and args.output:
-        random_logo()
-        url = args.url
-        data = args.Data
-        sqli_scan(url,data,payloads,output_s=True)
-    elif args.url and args.data and args.payload and args.sql:
-        random_logo()
-        url = args.url
-        payload = args.payloadw
-        data = args.Data
-        sqli_scan(url,data,payload,False)
-    elif args.url and args.data and args.payload and args.sql and args.output:
-        random_logo()
-        url = args.url
-        payload = args.payloadw
-        data = args.Data
-        sqli_scan(url,data,payload,output_s=True)
-# ======== Host Header Injection =========
-    elif args.hhi and args.url:
-        random_logo()
-        hhi(args.url,None)
-    elif args.hhi and args.url and args.output:
-        random_logo()
-        hhi(args.url,None)
-    elif args.hhi and args.host and args.url:
-        random_logo()
-        hhi(args.url, args.host)
-    elif args.hhi and args.host and args.url and args.output:
-        random_logo()
-        hhi(args.url, args.host)
-# ======== Scan Java Script Files =========
-    elif args.js:
-        random_logo()
-        js_scanner(args.url)
-# ======== Scan XSS =========
-    elif args.reflected:
-        random_logo()
-        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=False)
+        output_s = args.output if args.output else False
+        scanner = ReflectedXSSScanner(url, [], output_s)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=False)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
-    elif args.reflected and args.output:
-        random_logo()
-        scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=True)
+
+    # Handle DOM XSS scanning
+    if args.dom:
+        url = args.url
+        output_s = args.output if args.output else False
+        scanner = DOMXSSScanner(url, [], output_s)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = ReflectedXSSScanner(args.url,reflected_xss_payloads,output_s=True)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
-    elif args.dom:
-        random_logo()
-        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=False)
+
+    # Handle Blind XSS scanning
+    if args.blind:
+        url = args.url
+        output_s = args.output if args.output else False
+        scanner = BlindXSSScanner(url, [], output_s)
         try:
             scanner.crawl_and_scan()
         except KeyboardInterrupt:
             if asking():
                 random_logo()
-                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=False)
                 scanner.crawl_and_scan()
             else:
                 sys.exit()
-    elif args.dom and args.output:
-        random_logo()
-        scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=True)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
-                scanner = DOMXSSScanner(args.url,dom_based_xss_payloads,output_s=True)
-                scanner.crawl_and_scan()
-            else:
-                sys.exit()
-    elif args.blind:
-        random_logo()
-        scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=False)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
-                scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=False)
-                scanner.crawl_and_scan()
-            else:
-                sys.exit()
-    elif args.blind and args.output:
-        random_logo()
-        scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=True)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
-                scanner = BlindXSSScanner(args.url,blind_xss_payloads,output_s=True)
-                scanner.crawl_and_scan()
-            else:
-                sys.exit()
-        
-    else:
-        print("[\033[31mError\033[0m]")
-        slowprint("please try again with true usage")
-        parser.print_help()
-        sys.exit(1)
 
 
 
 
 
 if __name__ == '__main__':
-    # update()
+    update()
     main()

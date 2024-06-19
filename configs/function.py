@@ -197,7 +197,7 @@ def sqli_scan(url, parameters, payloads, output_s=False):
                         vulnerable_parameters.append((parameter, payload, 'Vulnerable (Boolean-based)'))
                         print("sql injection in " + new_url)
                         slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
-                        print("linkre")
+                        print("https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")
 
 
             # Check for time-based SQL injection
@@ -222,7 +222,7 @@ def sqli_scan(url, parameters, payloads, output_s=False):
                         vulnerable_parameters.append((parameter, payload, 'Vulnerable (Time-based)'))
                         print("sql injection in " + new_url)
                         slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
-                        print("linkre")
+                        print("https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")
 
             # Check for UNION SELECT-based SQL injection
             for parameter in parameters:
@@ -242,7 +242,7 @@ def sqli_scan(url, parameters, payloads, output_s=False):
                         vulnerable_parameters.append((parameter, payload, 'Vulnerable (UNION SELECT-based)'))
                         print("sql injection in " + new_url)
                         slowprint("you can read this artical to learn more about this vulnerability and how to fix it")
-                        print("linkre")
+                        print("https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html")
 
 
             return vulnerable_parameters
@@ -660,7 +660,7 @@ class BlindXSSScanner:
                             output_file.write(f"{form_url}\n")
                     else:
                         slowprint("You can read this article to learn more about this vulnerability and how to fix it:")
-                        print("linkre")
+                        print("https://www.invicti.com/learn/blind-cross-site-scripting/")
         except Exception as e:
             print(f"[\033[32m+\033[0m] checking Blind XSS in {url}: {e}")
 
@@ -676,21 +676,31 @@ class BlindXSSScanner:
             urls_to_scan.extend(self._get_all_urls(current_url))
 
 
+def get_latest_version():
+    url = "https://raw.githubusercontent.com/yourusername/yourrepository/main/version.py"
+    response = requests.get(url)
+    if response.status_code == 200:
+       exec(response.text)
+       return __version__
+    else:
+       raise Exception("Failed to fetch the latest version information.")
+
+def is_update_needed():
+    from version import __version__ as current_version
+    latest_version = get_latest_version()
+    return current_version != latest_version
 
 def update():
-    response = requests.get('https://www.github.com/mrsi13nt/black-candle/configs/config.py')
-    if __version__ in response.text :
-        pass
-    else:
-        print("\nthere is new version, want to update ? (Y/N)\n")
-        up = input(">> ").upper
-        if up == "Y":
-            subprocess.run("ds",shell=True)
-        elif up == "N":
-            pass
+    if is_update_needed():
+        print('there is an update, you want to update? [Y/N]')
+        answer = input(">> ")
+        if answer.upper == "Y":
+            print('installing the update...')
+        elif answer.upper == "N":
+            print('it\'s okay you make your choise !')
         else:
-            slowprint("wrong answer")
-            sys.exit(2)
+            print("wrong answer")
+            sys.exit(1)
             
 
 
