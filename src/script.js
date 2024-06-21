@@ -20,6 +20,12 @@ function colors(check){
     const hh = document.getElementById('hh')
     const js = document.getElementById('js')
     const footer = document.getElementById('foot') 
+    const install = document.getElementById('installing')
+    const text1 = document.getElementById('text1')
+    const text2 = document.getElementById('text2')
+    const text3 = document.getElementById('text3')
+    const text4 = document.getElementById('text4')
+    const text5 = document.getElementById('text5')
     if (check == true){
         head_text.style.color = "white"
         table.style.backgroundColor = "#4b4a4a"
@@ -28,6 +34,13 @@ function colors(check){
         hh.style.backgroundColor = "#4b4a4a"
         js.style.backgroundColor = "#4b4a4a"
         footer.style.backgroundColor = "#383737"
+        install.style.backgroundColor = "#4b4a4a"
+        text1.style.color = "white"
+        text2.style.color = "white"
+        text3.style.color = "white"
+        text4.style.color = "white"
+        text5.style.color = "white"
+        
     }else{
         head_text.style.color = "black"
         table.style.backgroundColor = "#ffffff"
@@ -36,6 +49,12 @@ function colors(check){
         hh.style.backgroundColor = "#ffffff"
         js.style.backgroundColor = "#ffffff"
         footer.style.backgroundColor = "#bdb9b9"
+        install.style.backgroundColor = "#ffffff"
+        text1.style.color = "black"
+        text2.style.color = "black"
+        text3.style.color = "black"
+        text4.style.color = "black"
+        text5.style.color = "black"
     }
     
 }

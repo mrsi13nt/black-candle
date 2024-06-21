@@ -40,79 +40,81 @@ def main():
         slowprint("[\033[31mError\033[0m] -u/--url option is required.")
         parser.print_help()
         sys.exit(1)
+    else:
+        if args.web:
+            webbrowser.open("how_to_use_me.html")
+            return
 
-    if args.web:
-        webbrowser.open("how_to_use_me.html")
-        return
+        # Print the random logo
+        random_logo()
 
-    # Print the random logo
-    random_logo()
+        # Handle SQL scanning
+        if args.sql:
+            url = args.url
+            params = args.data if args.data else {}
+            payloads = [args.payload] if args.payload else []
+            output_s = args.output if args.output else False
+            sqli_scan(url, params, payloads, output_s)
 
-    # Handle SQL scanning
-    if args.sql:
-        url = args.url
-        params = args.data if args.data else {}
-        payloads = [args.payload] if args.payload else []
-        output_s = args.output if args.output else False
-        sqli_scan(url, params, payloads, output_s)
+        # Handle Host Header Injection
+        if args.hhi:
+            url = args.url
+            host = args.host if args.host else None
+            hhi(url, host)
 
-    # Handle Host Header Injection
-    if args.hhi:
-        url = args.url
-        host = args.host if args.host else None
-        hhi(url, host)
+        # Handle JavaScript scanning
+        if args.js:
+            url = args.url
+            js_scanner(url)
 
-    # Handle JavaScript scanning
-    if args.js:
-        url = args.url
-        js_scanner(url)
-
-    # Handle Reflected XSS scanning
-    if args.reflected:
-        url = args.url
-        output_s = args.output if args.output else False
-        scanner = ReflectedXSSScanner(url, [], output_s)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
+        # Handle Reflected XSS scanning
+        if args.reflected:
+            url = args.url
+            output_s = args.output if args.output else False
+            scanner = ReflectedXSSScanner(url, [], output_s)
+            try:
                 scanner.crawl_and_scan()
-            else:
-                sys.exit()
+            except KeyboardInterrupt:
+                if asking():
+                    random_logo()
+                    scanner.crawl_and_scan()
+                else:
+                    sys.exit()
 
-    # Handle DOM XSS scanning
-    if args.dom:
-        url = args.url
-        output_s = args.output if args.output else False
-        scanner = DOMXSSScanner(url, [], output_s)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
+        # Handle DOM XSS scanning
+        if args.dom:
+            url = args.url
+            output_s = args.output if args.output else False
+            scanner = DOMXSSScanner(url, [], output_s)
+            try:
                 scanner.crawl_and_scan()
-            else:
-                sys.exit()
+            except KeyboardInterrupt:
+                if asking():
+                    random_logo()
+                    scanner.crawl_and_scan()
+                else:
+                    sys.exit()
 
-    # Handle Blind XSS scanning
-    if args.blind:
-        url = args.url
-        output_s = args.output if args.output else False
-        scanner = BlindXSSScanner(url, [], output_s)
-        try:
-            scanner.crawl_and_scan()
-        except KeyboardInterrupt:
-            if asking():
-                random_logo()
+        # Handle Blind XSS scanning
+        if args.blind:
+            url = args.url
+            output_s = args.output if args.output else False
+            scanner = BlindXSSScanner(url, [], output_s)
+            try:
                 scanner.crawl_and_scan()
-            else:
-                sys.exit()
+            except KeyboardInterrupt:
+                if asking():
+                    random_logo()
+                    scanner.crawl_and_scan()
+                else:
+                    sys.exit()
+
+    
 
 
 
 
 
 if __name__ == '__main__':
-    update()
+    # update()
     main()

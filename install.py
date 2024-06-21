@@ -2,6 +2,7 @@ import subprocess
 import platform
 import os
 
+# check if OS is WSL or not
 def is_wsl():
     try:
         with open('/proc/version', 'r') as file:
@@ -12,6 +13,7 @@ def is_wsl():
         pass
     return False
 
+# check if OS have GUI or not
 def has_gui():
     display_var = os.getenv('DISPLAY')
     if display_var:

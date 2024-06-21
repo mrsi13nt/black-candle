@@ -101,11 +101,11 @@ hr {
 
 .code {
     background-color: gray;
+    color: black;
 }
 
 .warning {
     color: red;
-    background-color: darkgray;
 }
 
 header {
@@ -275,7 +275,6 @@ body {
 
 .install-part .warning {
     color: #ff0000;
-    font-weight: bold;
 }
 
 .install-part a {

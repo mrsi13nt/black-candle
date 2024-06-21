@@ -13,12 +13,12 @@
         <button id="dark-mode-btn">Dark Mode</button>
     </header>
     <hr>
-    <div class="install-part">
-        <h1 class="head">how to Install the tool</h1>
-        <h2>download the tool</h2>
-        <p>if you using Linux open your terminal make sure Git installed and then write <span class="code">git clone (linkre)</span><br>but if you using windows so you have 2 options : 1- to download the whole tool as a file from Github 2- to download git in your windows and open your git terminal and follow the steps of the linux</p>
-        <h2>install the tool</h2>
-        <p>now from your terminal make sure you are in the tool's folder and then run this command <span class="code">pip3 install -r requirements.txt</span><br><span class="warning">before you run this command make sure you installed python3 if isn't you can download from <a href="#">here</a></span></p>
+    <div class="install-part" id="installing">
+        <h1 class="head" id="text1">how to Install the tool</h1>
+        <h2 id="text2">download the tool</h2>
+        <p id="text3">if you using Linux open your terminal make sure Git installed and then write <span class="code">git clone https://github.com/mrsi13nt/black-candle.git</span><br>but if you using windows so you have 2 options : 1- to download the whole tool as a file from Github 2- to download git in your windows and open your git terminal and follow the steps of the linux</p>
+        <h2 id="text4">install the tool</h2>
+        <p id="text5">now from your terminal make sure you are in the tool's folder and then run this command <span class="code">pip3 install -r requirements.txt</span><br><span class="warning code">before you run this command make sure you installed python3 if isn't you can download from <a href="#">here</a></span></p>
     </div>
     <div class="options-container" id="options-contain">
         <h1 id="main-head">Black Candle Options</h1>
@@ -119,6 +119,7 @@
             <img src="src/img/xss.png" class="popup-image" onclick="openPopup('src/img/xss.png')">
         </section>
     </div>
+    <div class="future-work"></div>
     <!-- Popup HTML -->
     <div id="popup" class="popup">
         <span class="close-popup" onclick="closePopup()">&times;</span>

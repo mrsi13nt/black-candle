@@ -440,6 +440,7 @@ params = [
     "title",
     "description",
     "category",
+    "categories",
     "tags",
     "search",
     "sort",

@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import subprocess
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads,__version__
+from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
 from configs.config import error_based_payloads as ebp
 
 
@@ -608,7 +608,7 @@ class DOMXSSScanner:
                         self.vulnerable_urls.add(url)
                         print(f"DOM-based XSS found in {url} with payload: {payload}")
                         if output_s == True:
-                            # Write vulnerable URL to the output file
+                            # Write vulnerable URLs to the output file
                             with open("vulnerable_urls.txt", 'a') as output_file:
                                 output_file.write(f"{form_url}\n")
                         else:
@@ -655,7 +655,7 @@ class BlindXSSScanner:
                     self.vulnerable_urls.add(url)
                     print(f"Blind XSS found in {url} with payload: {payload}")
                     if output_s == True:
-                        # Write vulnerable URL to the output file
+                        # Write vulnerable URLs to the output file
                         with open("vulnerable_urls.txt", 'a') as output_file:
                             output_file.write(f"{form_url}\n")
                     else:
@@ -677,7 +677,7 @@ class BlindXSSScanner:
 
 
 def get_latest_version():
-    url = "https://raw.githubusercontent.com/yourusername/yourrepository/main/version.py"
+    url = "https://github.com/mrsi13nt/black-candle/main/version.py"
     response = requests.get(url)
     if response.status_code == 200:
        exec(response.text)
@@ -696,8 +696,9 @@ def update():
         answer = input(">> ")
         if answer.upper == "Y":
             print('installing the update...')
+            # here is update function 
         elif answer.upper == "N":
-            print('it\'s okay you make your choise !')
+            print('it\'s okay you made your choise !')
         else:
             print("wrong answer")
             sys.exit(1)
