@@ -8,11 +8,18 @@ from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from configs.config import errors_msgs,boolean_based_payloads,time_based_payloads,union_select_payloads,headers,reflected_xss_payloads,dom_based_xss_payloads
 from configs.config import error_based_payloads as ebp
+import socket
 
 
 
 
-
+def check_network():
+        try:
+            # Try to resolve the hostname
+            socket.gethostbyname("google.com")
+            return True
+        except socket.error:
+            return False
 
 
 
@@ -691,6 +698,9 @@ def is_update_needed():
     return current_version != latest_version
 
 def update():
+    if not check_network():
+        print("[\033[31mError\033[0m] No network connection. Please check your internet connection and try again.")
+        sys.exit(1)
     if is_update_needed():
         print('there is an update, you want to update? [Y/N]')
         answer = input(">> ")

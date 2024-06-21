@@ -8,6 +8,17 @@ from configs.function import *
 from configs.logo import *
 from configs.config import *
 import webbrowser
+import socket
+
+
+def check_network():
+        try:
+            # Try to resolve the hostname
+            socket.gethostbyname("google.com")
+            return True
+        except socket.error:
+            return False
+
 
 def main():
     usage = "usage: python3 black_candle.py [options] arg"
@@ -35,11 +46,13 @@ def main():
     parser.add_argument('-help', action='store_true', dest='web', help="for more info and tips")
     args = parser.parse_args()
 
+
     # Check if URL is provided
     if not args.url and not args.web:
         slowprint("[\033[31mError\033[0m] -u/--url option is required.")
         parser.print_help()
         sys.exit(1)
+
     
     if args.web:
         # Open offline HTML file
@@ -50,6 +63,10 @@ def main():
 
     # Print the random logo
     random_logo()
+    if not check_network():
+        print("[\033[31mError\033[0m] No network connection. Please check your internet connection and try again.")
+        sys.exit(1)
+    print("Network connection is available. Continuing with the program...")
 
     # Handle SQL scanning
     if args.sql:
