@@ -677,7 +677,7 @@ class BlindXSSScanner:
 
 
 def get_latest_version():
-    url = "https://github.com/mrsi13nt/black-candle/main/version.py"
+    url = "https://github.com/mrsi13nt/black-candle/blob/main/configs/version.py"
     response = requests.get(url)
     if response.status_code == 200:
        exec(response.text)
