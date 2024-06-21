@@ -26,6 +26,14 @@ function colors(check){
     const text3 = document.getElementById('text3')
     const text4 = document.getElementById('text4')
     const text5 = document.getElementById('text5')
+    const future = document.getElementById('future')
+    const text6 = document.getElementById('text6')
+    const text7 = document.getElementById('text7')
+    const text8 = document.getElementById('text8')
+    const text9 = document.getElementById('text9')
+    const text10 = document.getElementById('text10')
+    const text11 = document.getElementById('text11')
+    const text12 = document.getElementById('text12')
     if (check == true){
         head_text.style.color = "white"
         table.style.backgroundColor = "#4b4a4a"
@@ -35,11 +43,18 @@ function colors(check){
         js.style.backgroundColor = "#4b4a4a"
         footer.style.backgroundColor = "#383737"
         install.style.backgroundColor = "#4b4a4a"
+        future.style.backgroundColor = "#4b4a4a"
         text1.style.color = "white"
         text2.style.color = "white"
         text3.style.color = "white"
         text4.style.color = "white"
         text5.style.color = "white"
+        text6.style.color = "white"
+        text7.style.color = "white"
+        text8.style.color = "white"
+        text9.style.color = "white"
+        text10.style.color = "white"
+        text11.style.color = "white"
         
     }else{
         head_text.style.color = "black"
@@ -50,11 +65,18 @@ function colors(check){
         js.style.backgroundColor = "#ffffff"
         footer.style.backgroundColor = "#bdb9b9"
         install.style.backgroundColor = "#ffffff"
+        future.style.backgroundColor = "#ffffff"
         text1.style.color = "black"
         text2.style.color = "black"
         text3.style.color = "black"
         text4.style.color = "black"
         text5.style.color = "black"
+        text6.style.color = "black"
+        text7.style.color = "black"
+        text8.style.color = "black"
+        text9.style.color = "black"
+        text10.style.color = "black"
+        text11.style.color = "black"
     }
     
 }

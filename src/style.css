@@ -157,7 +157,9 @@ header {
     transition: transform 0.3s ease; /* Add transition for smooth scaling */
 }
 .feature:hover img {
-    transform: scale(1.1); /* Scale the image on hover */
+    transform: scale(1.1);
+    cursor: pointer;
+    /* Scale the image on hover */
 }
 
 /* Existing CSS styles */
