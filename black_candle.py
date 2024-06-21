@@ -70,7 +70,7 @@ def main():
 
     # Handle SQL scanning
     if args.sql:
-        print("[DEBUG] Running SQL Scanner")
+        print("Running SQL Scanner")
         url = args.url
         params = args.data if args.data else {}
         payloads = [args.payload] if args.payload else []
@@ -79,20 +79,20 @@ def main():
 
     # Handle Host Header Injection
     if args.hhi:
-        print("[DEBUG] Running Host Header Injection Scanner")
+        print("Running Host Header Injection Scanner")
         url = args.url
         host = args.host if args.host else None
         hhi(url, host)
 
     # Handle JavaScript scanning
     if args.js:
-        print("[DEBUG] Running JavaScript Scanner")
+        print("Running JavaScript Scanner")
         url = args.url
         js_scanner(url)
 
     # Handle Reflected XSS scanning
     if args.reflected:
-        print("[DEBUG] Running Reflected XSS Scanner")
+        print("Running Reflected XSS Scanner")
         url = args.url
         output_s = args.output if args.output else False
         scanner = ReflectedXSSScanner(url, [], output_s)
@@ -107,7 +107,7 @@ def main():
 
     # Handle DOM XSS scanning
     if args.dom:
-        print("[DEBUG] Running DOM XSS Scanner")
+        print("Running DOM XSS Scanner")
         url = args.url
         output_s = args.output if args.output else False
         scanner = DOMXSSScanner(url, [], output_s)
@@ -122,7 +122,7 @@ def main():
 
     # Handle Blind XSS scanning
     if args.blind:
-        print("[DEBUG] Running Blind XSS Scanner")
+        print("Running Blind XSS Scanner")
         url = args.url
         output_s = args.output if args.output else False
         scanner = BlindXSSScanner(url, [], output_s)
@@ -142,5 +142,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # update()
+    update()
     main()

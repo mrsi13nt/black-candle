@@ -12,7 +12,7 @@ import socket
 
 
 
-
+# check the network connction
 def check_network():
         try:
             # Try to resolve the hostname
@@ -701,6 +701,7 @@ def update():
     if not check_network():
         print("[\033[31mError\033[0m] No network connection. Please check your internet connection and try again.")
         sys.exit(1)
+
     if is_update_needed():
         print('there is an update, you want to update? [Y/N]')
         answer = input(">> ")
