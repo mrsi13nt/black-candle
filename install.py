@@ -1,8 +1,6 @@
 import subprocess
 import platform
 import os
-from win32com.client import Dispatch
-import winshell
 import shutil
 
 # ---------------- windows ---------------------
@@ -23,13 +21,7 @@ def create_batch_file(script_path, batch_file_dir):
     print(f"Batch file created at: {batch_file_path}")
     return batch_file_path
 
-def create_shortcut(batch_file_path, shortcut_path, icon_path):
-    shell = Dispatch('WScript.Shell')
-    shortcut = shell.CreateShortcut(shortcut_path)
-    shortcut.TargetPath = batch_file_path
-    shortcut.WorkingDirectory = os.path.dirname(batch_file_path)
-    shortcut.IconLocation = icon_path
-    shortcut.save()
+
 
 
 # --------------- Linux -------------------
@@ -77,28 +69,10 @@ def create_applescript(script_path, app_path):
 
 
 # check what OS that user use
-os_type = check_os()
+os_type = platform.system()
 if os_type == 'Windows':
     print("installing...")
-    current_path = os.getcwd()
     
-    # Path to your Python script
-    script_path = fr'{current_path}\black_candle.py'
-
-    # Directory to place the batch file
-    batch_file_dir = fr'{current_path}'
-
-    # Path to your icon file (.ico)
-    icon_path = fr'{current_path}\configs\icon.ico'
-
-    # Path to place the shortcut
-    shortcut_path = os.path.join(winshell.desktop(), 'black_candle.lnk')
-
-    # Create the batch file
-    batch_file_path = create_batch_file(script_path, batch_file_dir)
-
-    # Create the shortcut with custom icon
-    create_shortcut(batch_file_path, shortcut_path, icon_path)
 
 elif os_type == 'Linux':
     if is_wsl(): # this all broken until we understand WSL OS files
