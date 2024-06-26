@@ -51,6 +51,10 @@ def asking():
 
 
 def sqli_scan(url, parameters, payloads, output_s=False):
+    if parameters is None:
+        parameters = []
+    if payloads is None:
+        payloads = []
     if output_s == True:
         try:
             # Initialize empty list to store results
